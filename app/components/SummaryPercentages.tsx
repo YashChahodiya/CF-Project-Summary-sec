@@ -3,7 +3,23 @@ import { ApexOptions } from "apexcharts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSackDollar } from "@fortawesome/pro-solid-svg-icons";
 
-const SummaryPercentages: React.FC = () => {
+const SummaryPercentages = ({ data }: any) => {
+  const billing_vs_actual = data?.billing_vs_actual;
+  const all_item_total = data?.all_item_total;
+  console.log(data);
+  const formatCurrency = (value: any) => {
+    // Convert string to number, divide by 100 to get the correct decimal place
+
+    // Format the number as currency
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(value);
+  };
+
+  console.log("qwqwqwqw", data);
   const [ReactApexChart, setReactApexChart] = useState<any>();
 
   useEffect(() => {
@@ -29,6 +45,7 @@ const SummaryPercentages: React.FC = () => {
     xaxis: {
       categories: ["Committed", "Actual", "Labor", "Invoiced"],
     },
+
     dataLabels: {
       enabled: false, // Disable default data labels on the chart
     },
@@ -41,7 +58,7 @@ const SummaryPercentages: React.FC = () => {
       intersect: false,
       y: {
         formatter: function (val: number) {
-          return val + "%"; // Format tooltips to show percentage
+          return formatCurrency(Number(val)); // Format tooltips to show percentage
         },
       },
     },
@@ -51,15 +68,31 @@ const SummaryPercentages: React.FC = () => {
       position: "top",
     },
   };
-
+  console.log(all_item_total, all_item_total?.total?.estimated_total);
   const series = [
-    { name: "Invoiced to Date", data: [70, 850, 46, 58] },
-    { name: "Total Project Amount", data: [99, 97, 97, 97] },
+    {
+      name: "Invoiced to Date",
+      data: [
+        all_item_total?.total?.commited_total,
+        all_item_total?.total?.actual_total,
+        all_item_total?.labor?.actual_total,
+        Number(billing_vs_actual?.amount_invoiced / 100),
+      ],
+    },
+    {
+      name: "Total Project Amount",
+      data: [
+        all_item_total?.unassigned?.estimated_total,
+        all_item_total?.total?.estimated_total,
+        all_item_total?.labor?.estimated_total,
+        Number(billing_vs_actual?.original_contract_amount / 100),
+      ],
+    },
   ];
 
   return (
-    <>
-      <div className="flex gap-2  items-center  ">
+    <div className="h-full">
+      <div className="flex gap-2  items-center mb-5 ">
         <div className="bg-blue-100 w-7 h-7 rounded-full flex justify-center items-center">
           <FontAwesomeIcon icon={faSackDollar} />
         </div>
@@ -70,12 +103,12 @@ const SummaryPercentages: React.FC = () => {
       ) : (
         <ReactApexChart
           type="bar"
+          height={307}
           options={options}
           series={series}
-          height="300"
         />
       )}
-    </>
+    </div>
   );
 };
 

@@ -1,11 +1,56 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "dhtmlx-scheduler/codebase/dhtmlxscheduler.css";
 import "./dhtmlxs.css";
 import { faCalendarDay } from "@fortawesome/pro-solid-svg-icons";
+import axios from "axios";
 
-const SchedulerWidget: React.FC = () => {
+const SchedulerWidget = () => {
+  const [data, setData] = useState<any>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const formData = new FormData();
+        formData.append("op", "get_schedule_calendar_events");
+        formData.append("project_id", "147534");
+        formData.append("for", "dashboard_summary");
+        formData.append("start_date_range", "2024-9-01 00:00:00");
+        formData.append("version", "web");
+        formData.append("from", "panel");
+        formData.append("iframe_call", "0");
+        formData.append("tz", "+5:30");
+        formData.append("tzid", "Asia/Calcutta");
+        formData.append("curr_time", "2024-08-31 15:50:38");
+        formData.append("force_login", "0");
+        formData.append("global_project", "");
+        formData.append("user_id", "109871");
+        formData.append("company_id", "829");
+
+        const response = await axios.post(
+          "https://api-cfdev.contractorforeman.net/service.php?opp=get_schedule_calendar_events&c=829&u=109871&p=manage_projects",
+          formData
+        );
+
+        // Return the data fetched from the API
+        setData(response?.data?.data?.modules);
+      } catch (error) {
+        console.log("Error fetching data:", error);
+      }
+    };
+
+    const timeOut = setTimeout(() => {
+      fetchData();
+    }, 500);
+
+    return () => {
+      // Cleanup function to be called when the component unmounts
+      // console.log("Cleanup function called");
+      clearTimeout(timeOut);
+    };
+  }, []);
+
   const schedulerContainer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -35,6 +80,7 @@ const SchedulerWidget: React.FC = () => {
 
         const currentDate = new Date(2024, 8, 1);
         scheduler.init(schedulerContainer.current, currentDate, "week");
+        scheduler.parse(data);
 
         scheduler.templates.week_scale_date = function (date: Date) {
           return scheduler.date.date_to_str("%D, %j %M")(date);
@@ -79,7 +125,7 @@ const SchedulerWidget: React.FC = () => {
           <span className="font-semibold text-xl">Project Summary</span>
         </div>
       </div>
-      <div className="h-60">
+      <div>
         <div
           ref={schedulerContainer}
           style={{ width: "100%", height: "100%" }}

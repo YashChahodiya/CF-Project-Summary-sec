@@ -1,7 +1,7 @@
 import { faFileImage } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const RecentPhtotos = () => {
+const RecentPhtotos = ({ data }: any) => {
   return (
     <>
       <div className="flex gap-2  items-center  ">
