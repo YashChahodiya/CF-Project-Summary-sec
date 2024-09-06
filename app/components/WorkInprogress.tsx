@@ -17,8 +17,8 @@ const WorkInprogress = ({ data }: any) => {
   return (
     <>
       <div className="flex gap-2  items-center  ">
-        <div className="bg-blue-100 w-7 h-7 rounded-full flex justify-center items-center">
-          <FontAwesomeIcon icon={faFileLines} />
+        <div className="bg-blue-100 w-8 h-8  rounded-full flex justify-center items-center">
+          <FontAwesomeIcon icon={faFileLines} className="text-base" />
         </div>
         <span className="font-semibold text-xl">Work In Progress (WIP)</span>
       </div>

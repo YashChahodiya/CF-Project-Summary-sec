@@ -32,7 +32,7 @@ const Invoiced = ({ data, customer_additional_contacts }: any) => {
       <div className="bg-white border h-full rounded-md shadow-md hover:shadow-lg hover:transition-shadow hover:duration-500 px-4 py-2.5">
         <div className="flex justify-start items-center gap-3 w-full  ">
           <div className="bg-[#ffd1a7dd] w-12 h-10 rounded-full flex justify-center items-center text-[#FB8056] ">
-            <FontAwesomeIcon icon={faUserGroup} className="" />
+            <FontAwesomeIcon icon={faUserGroup} className="text-base" />
           </div>
           <div className=" w-full">
             Customer
@@ -51,7 +51,7 @@ const Invoiced = ({ data, customer_additional_contacts }: any) => {
       </div>
       <div className="bg-white border h-full rounded-md shadow-md hover:shadow-lg hover:transition-shadow hover:duration-500 px-4 py-2.5">
         <div className="flex gap-2 items-center">
-          <div className="bg-blue-100 w-7 h-7 rounded-full flex justify-center items-center">
+          <div className="bg-blue-100 w-8 h-8  rounded-full flex justify-center items-center">
             <FontAwesomeIcon icon={faFileChartColumn} />
           </div>
           <span className="font-semibold text-xl">Invoiced vs Actual</span>

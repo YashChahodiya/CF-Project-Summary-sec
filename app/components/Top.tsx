@@ -1,5 +1,11 @@
-import { faCalculator } from "@fortawesome/pro-solid-svg-icons";
+import {
+  faCalendar,
+  faCalendarDays,
+  faUserTie,
+  faUserVneck,
+} from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChartMixed } from "@fortawesome/sharp-regular-svg-icons";
 import { formatCurrency } from "~/helpers";
 
 const Top = ({ data }: any) => {
@@ -8,7 +14,7 @@ const Top = ({ data }: any) => {
       <div className="col-span-1 rounded-lg border bg-white shadow-md hover:shadow-lg hover:transition-shadow hover:duration-500 px-4 py-2.5 w-full">
         <div className="flex justify-start items-center gap-3 w-full  ">
           <div className="bg-blue-100 w-12  h-10 rounded-full flex justify-center items-center ">
-            <FontAwesomeIcon icon={faCalculator} className="text-2xl" />
+            <FontAwesomeIcon icon={faChartMixed} className="text-xl" />
           </div>
           <div className=" w-full">
             {" "}
@@ -24,8 +30,8 @@ const Top = ({ data }: any) => {
       </div>
       <div className="col-span-1 rounded-lg border bg-white shadow-md hover:shadow-lg hover:transition-shadow hover:duration-500 px-4 py-2.5 w-full">
         <div className="flex justify-start items-center gap-3 w-full  ">
-          <div className="bg-blue-100 w-14   h-12 rounded-full flex justify-center items-center ">
-            <FontAwesomeIcon icon={faCalculator} className="text-2xl" />
+          <div className="bg-blue-100 w-12   h-10 rounded-full flex justify-center items-center ">
+            <FontAwesomeIcon icon={faUserVneck} className="text-xl" />
           </div>
           <div className=" w-full">
             {" "}
@@ -38,8 +44,8 @@ const Top = ({ data }: any) => {
       </div>
       <div className="col-span-1 rounded-lg border bg-white shadow-md hover:shadow-lg hover:transition-shadow hover:duration-500 px-4 py-2.5 w-full">
         <div className="flex justify-start items-center gap-3 w-full  ">
-          <div className="bg-blue-100 w-14   h-12 rounded-full flex justify-center items-center ">
-            <FontAwesomeIcon icon={faCalculator} className="text-2xl" />
+          <div className="bg-blue-100 w-12   h-10 rounded-full flex justify-center items-center ">
+            <FontAwesomeIcon icon={faUserTie} className="text-xl" />
           </div>
           <div className=" w-full">
             {" "}
@@ -52,8 +58,8 @@ const Top = ({ data }: any) => {
       </div>
       <div className="col-span-1 rounded-lg border bg-white shadow-md hover:shadow-lg hover:transition-shadow hover:duration-500 px-4 py-2.5 w-full">
         <div className="flex justify-start items-center gap-3 w-full  ">
-          <div className="bg-blue-100 w-14   h-12 rounded-full flex justify-center items-center ">
-            <FontAwesomeIcon icon={faCalculator} className="text-2xl" />
+          <div className="bg-blue-100 w-12   h-10 rounded-full flex justify-center items-center ">
+            <FontAwesomeIcon icon={faCalendar} className="text-xl" />
           </div>
           <div className=" w-full">
             {" "}
@@ -66,8 +72,8 @@ const Top = ({ data }: any) => {
       </div>
       <div className="col-span-1 rounded-lg border bg-white shadow-md hover:shadow-lg hover:transition-shadow hover:duration-500 px-4 py-2.5 w-full">
         <div className="flex justify-start items-center gap-3 w-full  ">
-          <div className="bg-blue-100 w-14   h-12 rounded-full flex justify-center items-center ">
-            <FontAwesomeIcon icon={faCalculator} className="text-2xl" />
+          <div className="bg-blue-100 w-12   h-10 rounded-full flex justify-center items-center ">
+            <FontAwesomeIcon icon={faCalendarDays} className="text-xl" />
           </div>
           <div className=" w-full">
             {" "}

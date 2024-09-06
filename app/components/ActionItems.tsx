@@ -103,8 +103,8 @@ const ActionItems = () => {
   return (
     <div className="h-full">
       <div className="flex gap-2  items-center  mb-5">
-        <div className="bg-blue-100 w-7 h-7 rounded-full flex justify-center items-center">
-          <FontAwesomeIcon icon={faBoxCircleCheck} />
+        <div className="bg-blue-100 w-8 h-8  rounded-full flex justify-center items-center">
+          <FontAwesomeIcon icon={faBoxCircleCheck} className="text-base" />
         </div>
         <span className="font-semibold text-xl"> Action-Items</span>
       </div>
