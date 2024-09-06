@@ -88,15 +88,27 @@ const ActionItems = () => {
   const series = [
     {
       name: "Invocies",
-      data: [invoices?.total_open, invoices?.total_due, invoices?.total_close],
+      data: [
+        Number(invoices?.total_open),
+        Number(invoices?.total_due),
+        Number(invoices?.total_close),
+      ],
     },
     {
       name: "Bills",
-      data: [bills?.total_open, bills?.bill_count, bills?.total_close],
+      data: [
+        Number(bills?.total_open),
+        Number(bills?.bill_count),
+        Number(bills?.total_close),
+      ],
     },
     {
       name: "Bills",
-      data: [pos?.total_open, pos?.bill_count, pos?.total_close],
+      data: [
+        Number(pos?.total_open),
+        Number(pos?.bill_count),
+        Number(pos?.total_close),
+      ],
     },
   ];
 
