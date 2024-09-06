@@ -1,4 +1,4 @@
-import { faCalculator } from "@fortawesome/pro-duotone-svg-icons";
+import { faFileImage } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const RecentPhtotos = () => {
@@ -6,7 +6,7 @@ const RecentPhtotos = () => {
     <>
       <div className="flex gap-2  items-center  ">
         <div className="bg-blue-100 w-7 h-7 rounded-full flex justify-center items-center">
-          <FontAwesomeIcon icon={faCalculator} />
+          <FontAwesomeIcon icon={faFileImage} />
         </div>
         <span className="font-semibold text-xl">Recent Photos</span>
       </div>

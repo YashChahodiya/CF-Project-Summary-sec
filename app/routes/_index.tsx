@@ -11,10 +11,6 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   return (
     <div>
-      <h1 className="bg-[#223558] text-white text-center p-1 text-xl">
-        {" "}
-        Project-Summary{" "}
-      </h1>
       <Dashboard />
     </div>
   );

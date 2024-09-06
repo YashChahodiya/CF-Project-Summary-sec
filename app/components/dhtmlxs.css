@@ -1,0 +1,16 @@
+
+
+.dhx_cal_header {
+    background-color: #2235581A !important; 
+   
+    
+  }
+  .dhx_cal_data {
+    overflow-y: hidden !important; 
+  }
+  
+  .dhx_scale_time{
+    overflow-y: hidden;
+  }
+
+

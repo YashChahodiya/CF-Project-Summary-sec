@@ -55,7 +55,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="space-y-4  px-4  ">
-      <div className="  w-full ">
+      <div className="  w-full h-16  ">
         <Suspense fallback={<p>Loading Poject topbar...</p>}>
           <Top />
         </Suspense>
@@ -77,7 +77,7 @@ const Dashboard: React.FC = () => {
           </Suspense>
         </div>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 w-full h-full ">
         <div className="bg-white border rounded-md col-span-4 shadow-md hover:shadow-lg hover:transition-shadow hover:duration-500  px-4 py-2.5">
           <Suspense fallback={<p>Loading Invoiced ...</p>}>
             <Invoiced />

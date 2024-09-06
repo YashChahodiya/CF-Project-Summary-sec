@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ApexOptions } from "apexcharts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalculator } from "@fortawesome/pro-duotone-svg-icons";
+import { faSackDollar } from "@fortawesome/pro-solid-svg-icons";
 
 const SummaryPercentages: React.FC = () => {
   const [ReactApexChart, setReactApexChart] = useState<any>();
@@ -53,7 +53,7 @@ const SummaryPercentages: React.FC = () => {
   };
 
   const series = [
-    { name: "Invoiced to Date", data: [98, 86, 46, 58] },
+    { name: "Invoiced to Date", data: [70, 850, 46, 58] },
     { name: "Total Project Amount", data: [99, 97, 97, 97] },
   ];
 
@@ -61,7 +61,7 @@ const SummaryPercentages: React.FC = () => {
     <>
       <div className="flex gap-2  items-center  ">
         <div className="bg-blue-100 w-7 h-7 rounded-full flex justify-center items-center">
-          <FontAwesomeIcon icon={faCalculator} />
+          <FontAwesomeIcon icon={faSackDollar} />
         </div>
         <span className="font-semibold text-xl">Summary Percentages</span>
       </div>

@@ -2,7 +2,7 @@ import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalculator } from "@fortawesome/pro-duotone-svg-icons";
+import { faBoxCircleCheck } from "@fortawesome/pro-solid-svg-icons";
 
 const ActionItems: React.FC = () => {
   const [ReactApexChart, setReactApexChart] = useState<any>();
@@ -39,7 +39,7 @@ const ActionItems: React.FC = () => {
     <>
       <div className="flex gap-2  items-center  ">
         <div className="bg-blue-100 w-7 h-7 rounded-full flex justify-center items-center">
-          <FontAwesomeIcon icon={faCalculator} />
+          <FontAwesomeIcon icon={faBoxCircleCheck} />
         </div>
         <span className="font-semibold text-xl"> Action-Items</span>
       </div>
@@ -49,7 +49,6 @@ const ActionItems: React.FC = () => {
         <ReactApexChart
           type="bar"
           options={options}
-          responsive={true}
           series={series}
           height={"280"}
         />
