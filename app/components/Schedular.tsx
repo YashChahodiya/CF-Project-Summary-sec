@@ -79,7 +79,7 @@ const SchedulerWidget: React.FC = () => {
           <span className="font-semibold text-xl">Project Summary</span>
         </div>
       </div>
-      <div className="h-80">
+      <div className="h-60">
         <div
           ref={schedulerContainer}
           style={{ width: "100%", height: "100%" }}

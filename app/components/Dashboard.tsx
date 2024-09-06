@@ -18,6 +18,8 @@ import { faCalculator } from "@fortawesome/sharp-regular-svg-icons";
 // import axios from "axios";
 
 const Dashboard: React.FC = () => {
+  //api // https://api-cfdev.contractorforeman.net/service.php?opp=get_project_detail&c=829&u=109871&p=manage_projects
+
   //   const [data, setData] = useState<any>([]);
 
   //   useEffect(() => {
@@ -54,7 +56,7 @@ const Dashboard: React.FC = () => {
   //   }, []);
 
   return (
-    <div className="space-y-4  px-4  ">
+    <div className="space-y-4  px-4  overflow-y-auto sidebar ">
       <div className="  w-full h-16  ">
         <Suspense fallback={<p>Loading Poject topbar...</p>}>
           <Top />
@@ -78,7 +80,7 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 w-full h-full ">
-        <div className="bg-white border rounded-md col-span-4 shadow-md hover:shadow-lg hover:transition-shadow hover:duration-500  px-4 py-2.5">
+        <div className="col-span-4 ">
           <Suspense fallback={<p>Loading Invoiced ...</p>}>
             <Invoiced />
           </Suspense>

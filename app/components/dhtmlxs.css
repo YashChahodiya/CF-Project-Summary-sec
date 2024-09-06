@@ -13,4 +13,7 @@
     overflow-y: hidden;
   }
 
-
+  /* dhx_resize_denied dhx_move_denied */
+  .dhx_cal_data { 
+   display: none;
+  }
