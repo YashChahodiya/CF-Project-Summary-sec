@@ -3,81 +3,68 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { formatCurrency } from "~/helpers";
 
 const Top = ({ data }: any) => {
+  const Items = [
+    {
+      id: 1,
+      label: "Gross Profit",
+      label2: "-812.06%",
+      values: `${formatCurrency(Number(data?.gross_profit))}`,
+      icon: faCalculator,
+    },
+    {
+      id: 2,
+      label: "Site Manager",
+      label2: "",
+      values: `-`,
+      icon: faCalculator,
+    },
+    {
+      id: 3,
+      label: "Project Manager",
+      label2: "",
+      values: `-`,
+      icon: faCalculator,
+    },
+    {
+      id: 4,
+      label: "Start/End Date",
+      label2: "",
+      values: `-`,
+      icon: faCalculator,
+    },
+    {
+      id: 5,
+      label: " Schedule Completed",
+      label2: "",
+      values: `0%`,
+      icon: faCalculator,
+    },
+  ];
+
   return (
     <div className="  grid grid-cols-1 lg:grid-cols-5 w-full h-full  gap-2 mt-3 ">
-      <div className="col-span-1 rounded-lg border bg-white shadow-md hover:shadow-lg hover:transition-shadow hover:duration-500 px-4 py-2.5 w-full">
-        <div className="flex justify-start items-center gap-3 w-full  ">
-          <div className="bg-blue-100 w-12  h-10 rounded-full flex justify-center items-center ">
-            <FontAwesomeIcon icon={faCalculator} className="text-2xl" />
-          </div>
-          <div className=" w-full">
-            {" "}
-            Gross Profit
-            <p className="flex justify-between items-center text-sm font-semibold">
-              (-812.06%){" "}
-              <span className="text-emerald-600 font-semibold">
-                {formatCurrency(Number(data?.gross_profit))}
-              </span>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div className="col-span-1 rounded-lg border bg-white shadow-md hover:shadow-lg hover:transition-shadow hover:duration-500 px-4 py-2.5 w-full">
-        <div className="flex justify-start items-center gap-3 w-full  ">
-          <div className="bg-blue-100 w-14   h-12 rounded-full flex justify-center items-center ">
-            <FontAwesomeIcon icon={faCalculator} className="text-2xl" />
-          </div>
-          <div className=" w-full">
-            {" "}
-            Site Manager
-            <p className="flex justify-between items-center text-sm font-semibold">
-              <span className=" font-semibold">-</span>
-            </p>
+      {Items.map((i) => (
+        <div
+          className="col-span-1 rounded-lg border bg-white  hover:shadow-lg hover:transition-shadow hover:duration-500 px-4 py-2.5 w-full"
+          key={i.id}
+        >
+          <div className="flex justify-start items-center gap-3 w-full  ">
+            <div className="bg-blue-100 w-12  h-10 rounded-full flex justify-center items-center ">
+              <FontAwesomeIcon icon={i.icon} className="text-2xl" />
+            </div>
+            <div className=" w-full">
+              {" "}
+              {i.label}
+              <p className="flex justify-between items-center text-sm font-semibold">
+                {i.label2}
+                <span className="text-emerald-600 font-semibold">
+                  {i.values}
+                </span>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="col-span-1 rounded-lg border bg-white shadow-md hover:shadow-lg hover:transition-shadow hover:duration-500 px-4 py-2.5 w-full">
-        <div className="flex justify-start items-center gap-3 w-full  ">
-          <div className="bg-blue-100 w-14   h-12 rounded-full flex justify-center items-center ">
-            <FontAwesomeIcon icon={faCalculator} className="text-2xl" />
-          </div>
-          <div className=" w-full">
-            {" "}
-            Project Manager
-            <p className="flex justify-between items-center text-sm font-semibold">
-              <span className=" font-semibold">-</span>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div className="col-span-1 rounded-lg border bg-white shadow-md hover:shadow-lg hover:transition-shadow hover:duration-500 px-4 py-2.5 w-full">
-        <div className="flex justify-start items-center gap-3 w-full  ">
-          <div className="bg-blue-100 w-14   h-12 rounded-full flex justify-center items-center ">
-            <FontAwesomeIcon icon={faCalculator} className="text-2xl" />
-          </div>
-          <div className=" w-full">
-            {" "}
-            Start/End Date
-            <p className="flex justify-between items-center text-sm font-semibold">
-              <span className="font-semibold">-</span>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div className="col-span-1 rounded-lg border bg-white shadow-md hover:shadow-lg hover:transition-shadow hover:duration-500 px-4 py-2.5 w-full">
-        <div className="flex justify-start items-center gap-3 w-full  ">
-          <div className="bg-blue-100 w-14   h-12 rounded-full flex justify-center items-center ">
-            <FontAwesomeIcon icon={faCalculator} className="text-2xl" />
-          </div>
-          <div className=" w-full">
-            {" "}
-            Schedule Completed
-            <p className="flex justify-between items-center text-sm font-semibold">
-              <span className="font-semibold">0%</span>
-            </p>
-          </div>
-        </div>
-      </div>
+      ))}
     </div>
   );
 };

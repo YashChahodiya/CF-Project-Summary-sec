@@ -8,6 +8,7 @@ import {
 import { faCalculator } from "@fortawesome/pro-duotone-svg-icons";
 
 import { formatCurrency } from "~/helpers";
+import CustomIcon from "./CustomIcon";
 
 const ProjectSummary = ({ data }: any) => {
   const {
@@ -24,12 +25,7 @@ const ProjectSummary = ({ data }: any) => {
 
   return (
     <div className="space-y-2 text-sm">
-      <div className="flex gap-2  items-center  mb-5">
-        <div className="bg-blue-100 w-7 h-7 rounded-full flex justify-center items-center">
-          <FontAwesomeIcon icon={faCalculator} className="text-base" />
-        </div>
-        <span className="font-semibold text-xl">Project Summary</span>
-      </div>
+      <CustomIcon icon={faCalculator} label="Project Summary" />
 
       <div className="flex flex-col gap-3.5">
         {/* top */}

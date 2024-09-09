@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "dhtmlx-scheduler/codebase/dhtmlxscheduler.css";
-import "./dhtmlxs.css";
+import "../styles/dhtmlxs.css";
 import { faCalendarDay } from "@fortawesome/pro-solid-svg-icons";
 import axios from "axios";
 

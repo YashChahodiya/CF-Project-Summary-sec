@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ApexOptions } from "apexcharts";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSackDollar } from "@fortawesome/pro-solid-svg-icons";
+import CustomIcon from "./CustomIcon";
 
 const SummaryPercentages = ({ data }: any) => {
   const billing_vs_actual = data?.billing_vs_actual;
@@ -92,12 +92,8 @@ const SummaryPercentages = ({ data }: any) => {
 
   return (
     <div className="h-full">
-      <div className="flex gap-2  items-center mb-5 ">
-        <div className="bg-blue-100 w-7 h-7 rounded-full flex justify-center items-center">
-          <FontAwesomeIcon icon={faSackDollar} />
-        </div>
-        <span className="font-semibold text-xl">Summary Percentages</span>
-      </div>
+      <CustomIcon icon={faSackDollar} label="Summary Percentages" />
+
       {!ReactApexChart ? (
         <p>Loading...</p>
       ) : (

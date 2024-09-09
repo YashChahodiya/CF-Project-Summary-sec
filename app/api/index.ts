@@ -1,17 +1,6 @@
-import type { LoaderFunction, MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
 import axios from "axios";
 
-import Dashboard from "~/components/Dashboard";
-
-export const meta: MetaFunction = () => {
-  return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
-};
-
-export const loader: LoaderFunction = async () => {
+export const fetchProjectData = async () => {
   try {
     const formData = new FormData();
     formData.append("op", "get_project_detail");
@@ -41,13 +30,3 @@ export const loader: LoaderFunction = async () => {
     return [];
   }
 };
-
-export default function Index() {
-  const data = useLoaderData<typeof loader>();
-
-  return (
-    <div>
-      <Dashboard data={data} />
-    </div>
-  );
-}

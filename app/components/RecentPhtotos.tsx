@@ -1,19 +1,33 @@
 import { faFileImage } from "@fortawesome/pro-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import CustomIcon from "./CustomIcon";
+import { useEffect, useState } from "react";
+import Skeleton from "./Skeletons/skeleton";
 
 const RecentPhtotos = ({ data }: any) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
   return (
-    <>
-      <div className="flex gap-2  items-center  ">
-        <div className="bg-blue-100 w-7 h-7 rounded-full flex justify-center items-center">
-          <FontAwesomeIcon icon={faFileImage} />
+    <div className="h-full">
+      <CustomIcon icon={faFileImage} label="Recent Photos" />
+
+      {isLoading ? (
+        <div className="flex flex-wrap gap-4">
+          {[...Array(8)].map((_, i) => (
+            <Skeleton key={i} className="w-20 h-20 rounded-md"></Skeleton>
+          ))}
         </div>
-        <span className="font-semibold text-xl">Recent Photos</span>
-      </div>
-      <div className="flex justify-center items-center w-full h-full">
-        <img src="/NoPage.svg" alt="" />
-      </div>
-    </>
+      ) : (
+        <div className="flex justify-center items-center w-full h-full">
+          <img src="/NoPage.svg" alt="" />
+        </div>
+      )}
+    </div>
   );
 };
 

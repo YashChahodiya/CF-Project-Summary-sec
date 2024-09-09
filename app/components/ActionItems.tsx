@@ -1,9 +1,9 @@
 import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
-import React, { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
 import { faBoxCircleCheck } from "@fortawesome/pro-solid-svg-icons";
 import axios from "axios";
+import CustomIcon from "./CustomIcon";
 
 const ActionItems = () => {
   const [ReactApexChart, setReactApexChart] = useState<any>();
@@ -114,12 +114,8 @@ const ActionItems = () => {
 
   return (
     <div className="h-full">
-      <div className="flex gap-2  items-center  mb-5">
-        <div className="bg-blue-100 w-7 h-7 rounded-full flex justify-center items-center">
-          <FontAwesomeIcon icon={faBoxCircleCheck} />
-        </div>
-        <span className="font-semibold text-xl"> Action-Items</span>
-      </div>
+      <CustomIcon icon={faBoxCircleCheck} label="Action-Items" />
+
       {!ReactApexChart ? (
         <p>Loading...</p>
       ) : (
