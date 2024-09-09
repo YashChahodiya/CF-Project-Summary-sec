@@ -119,7 +119,7 @@ const SchedulerWidget = () => {
     <div className="w-full  relative ">
       <div className="space-y-2 text-sm absolute z-50 top-2">
         <div className="flex gap-2 items-center">
-          <div className="bg-blue-100 w-7 h-7 rounded-full flex justify-center items-center">
+          <div className="bg-blue-100 w-8 h-8  rounded-full flex justify-center items-center">
             <FontAwesomeIcon icon={faCalendarDay} className="text-base" />
           </div>
           <span className="font-semibold text-xl">Project Summary</span>

@@ -1,5 +1,12 @@
-import { faCalculator } from "@fortawesome/pro-solid-svg-icons";
+import {
+  faCalculator,
+  faCalendar,
+  faCalendarDays,
+  faUserTie,
+  faUserVneck,
+} from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChartMixed } from "@fortawesome/sharp-regular-svg-icons";
 import { formatCurrency } from "~/helpers";
 
 const Top = ({ data }: any) => {

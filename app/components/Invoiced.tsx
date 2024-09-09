@@ -79,7 +79,7 @@ const Invoiced = ({ data, customer_additional_contacts }: any) => {
       <div className={mainDivStyle}>
         <div className="flex justify-start items-center gap-3 w-full  ">
           <div className="bg-[#ffd1a7dd] w-12 h-10 rounded-full flex justify-center items-center text-[#FB8056] ">
-            <FontAwesomeIcon icon={faUserGroup} className="" />
+            <FontAwesomeIcon icon={faUserGroup} className="text-base" />
           </div>
           <div className=" w-full">
             Customer
