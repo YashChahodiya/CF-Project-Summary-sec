@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { ApexOptions } from "apexcharts";
-import { faSackDollar } from "@fortawesome/pro-solid-svg-icons";
 import CustomIcon from "./CustomIcon";
+
+import { faSackDollar } from "@fortawesome/pro-solid-svg-icons";
 
 const SummaryPercentages = ({ data }: any) => {
   const billing_vs_actual = data?.billing_vs_actual;
   const all_item_total = data?.all_item_total;
-  console.log(data);
-  const formatCurrency = (value: any) => {
-    // Convert string to number, divide by 100 to get the correct decimal place
 
-    // Format the number as currency
+  const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
@@ -19,7 +17,11 @@ const SummaryPercentages = ({ data }: any) => {
     }).format(value);
   };
 
-  console.log("qwqwqwqw", data);
+  const calculatePercentage = (value: number, total: number) => {
+    if (total === 0) return 0;
+    return (value / total) * 100;
+  };
+
   const [ReactApexChart, setReactApexChart] = useState<any>();
 
   useEffect(() => {
@@ -30,63 +32,95 @@ const SummaryPercentages = ({ data }: any) => {
     chart: {
       id: "chart1",
       toolbar: {
-        show: false,
+        // show: false,
       },
     },
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: "30%", // Adjust the column width
+        columnWidth: "30%",
         dataLabels: {
-          position: "top", // Optional: show data labels above bars
+          // position: "top", // Show data labels at the top of the bars
         },
+      },
+    },
+    dataLabels: {
+      enabled: false, // Enable data labels
+      formatter: function (val: number) {
+        return `${val.toFixed(2)}%`; // Format data labels as percentages
+      },
+      style: {
+        fontSize: "12px",
+        colors: ["#304758"], // Customize the color of the labels
       },
     },
     xaxis: {
       categories: ["Committed", "Actual", "Labor", "Invoiced"],
     },
-
-    dataLabels: {
-      enabled: false, // Disable default data labels on the chart
-    },
-    stroke: {
-      colors: ["transparent"],
-      width: 5,
+    yaxis: {
+      labels: {
+        formatter: function (val: number) {
+          return `${val.toFixed(0)}%`; // Show percentage in Y-axis
+        },
+      },
+      min: 0,
+      max: 1000, // Max 1000% to match the example
     },
     tooltip: {
-      shared: true, // Show multiple series in the tooltip (as shown in the image)
+      shared: true,
       intersect: false,
       y: {
-        formatter: function (val: number) {
-          return formatCurrency(Number(val)); // Format tooltips to show percentage
+        formatter: function (val: number, { seriesIndex, dataPointIndex, w }) {
+          const actualVal =
+            seriesIndex === 0
+              ? [
+                  all_item_total?.total?.commited_total,
+                  all_item_total?.total?.actual_total,
+                  all_item_total?.labor?.actual_total,
+                  billing_vs_actual?.amount_invoiced / 100,
+                ][dataPointIndex]
+              : [
+                  all_item_total?.unassigned?.estimated_total,
+                  all_item_total?.total?.estimated_total,
+                  all_item_total?.labor?.estimated_total,
+                  billing_vs_actual?.original_contract_amount / 100,
+                ][dataPointIndex];
+          return formatCurrency(actualVal); // Show currency in tooltip
         },
       },
     },
-    colors: ["#7989A9", "#F9C75C"], // Adjust colors for bars
+    colors: ["#7989A9", "#F9C75C"],
     legend: {
       show: false,
       position: "top",
     },
   };
-  console.log(all_item_total, all_item_total?.total?.estimated_total);
+
   const series = [
     {
-      name: "Invoiced to Date",
+      name: "Actual Cost",
       data: [
-        all_item_total?.total?.commited_total,
-        all_item_total?.total?.actual_total,
-        all_item_total?.labor?.actual_total,
-        Number(billing_vs_actual?.amount_invoiced / 100),
+        calculatePercentage(
+          all_item_total?.total?.commited_total,
+          all_item_total?.unassigned?.estimated_total
+        ),
+        calculatePercentage(
+          all_item_total?.total?.actual_total,
+          all_item_total?.total?.estimated_total
+        ),
+        calculatePercentage(
+          all_item_total?.labor?.actual_total,
+          all_item_total?.labor?.estimated_total
+        ),
+        calculatePercentage(
+          billing_vs_actual?.amount_invoiced / 100,
+          billing_vs_actual?.original_contract_amount / 100
+        ),
       ],
     },
     {
-      name: "Total Project Amount",
-      data: [
-        all_item_total?.unassigned?.estimated_total,
-        all_item_total?.total?.estimated_total,
-        all_item_total?.labor?.estimated_total,
-        Number(billing_vs_actual?.original_contract_amount / 100),
-      ],
+      name: "Estimated Cost",
+      data: [100, 100, 100, 100], // Total estimated baseline (100%)
     },
   ];
 

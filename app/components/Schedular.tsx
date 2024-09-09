@@ -58,7 +58,7 @@ const SchedulerWidget = () => {
       const scheduler: any = (await import("dhtmlx-scheduler")).default;
 
       if (schedulerContainer.current) {
-        scheduler.config.header = ["date", "prev", "today", "next"];
+        scheduler.config.header = ["date", "today", "prev", "next"];
         scheduler.config.multi_day = false;
         scheduler.config.first_hour = 0;
         scheduler.config.last_hour = 24;

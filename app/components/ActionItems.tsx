@@ -1,9 +1,10 @@
 import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import CustomIcon from "./CustomIcon";
+
 import { faBoxCircleCheck } from "@fortawesome/pro-solid-svg-icons";
 import axios from "axios";
-import CustomIcon from "./CustomIcon";
 
 const ActionItems = () => {
   const [ReactApexChart, setReactApexChart] = useState<any>();
@@ -46,8 +47,6 @@ const ActionItems = () => {
     }, 500);
 
     return () => {
-      // Cleanup function to be called when the component unmounts
-      // console.log("Cleanup function called");
       clearTimeout(timeOut);
     };
   }, []);
@@ -78,6 +77,10 @@ const ActionItems = () => {
       show: true,
       position: "top",
     },
+    dataLabels: {
+      enabled: true,
+      formatter: (val: any) => (isNaN(val) ? "" : val), // Remove NaN labels
+    },
   };
 
   // invoices
@@ -85,30 +88,33 @@ const ActionItems = () => {
   const bills = data?.open_incomplete_item?.opnIncoBills[0];
   const pos = data?.open_incomplete_item?.opnIncoPurchaseOrder[0];
 
+  const cleanData = (values: any) =>
+    values.map((val: any) => (isNaN(val) ? null : val));
+
   const series = [
     {
       name: "Invocies",
-      data: [
+      data: cleanData([
         Number(invoices?.total_open),
         Number(invoices?.total_due),
         Number(invoices?.total_close),
-      ],
+      ]),
     },
     {
       name: "Bills",
-      data: [
+      data: cleanData([
         Number(bills?.total_open),
         Number(bills?.bill_count),
         Number(bills?.total_close),
-      ],
+      ]),
     },
     {
-      name: "Bills",
-      data: [
+      name: "Purchase Orders",
+      data: cleanData([
         Number(pos?.total_open),
         Number(pos?.bill_count),
         Number(pos?.total_close),
-      ],
+      ]),
     },
   ];
 
