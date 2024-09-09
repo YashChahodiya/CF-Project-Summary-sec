@@ -60,11 +60,11 @@ const SummaryPercentages = ({ data }: any) => {
     yaxis: {
       labels: {
         formatter: function (val: number) {
-          return `${val.toFixed(0)}%`; // Show percentage in Y-axis
+          return `${val.toFixed(0)}%`;
         },
       },
       min: 0,
-      max: 1000, // Max 1000% to match the example
+      max: 1000,
     },
     tooltip: {
       shared: true,

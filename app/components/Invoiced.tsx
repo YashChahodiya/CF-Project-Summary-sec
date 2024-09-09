@@ -71,7 +71,7 @@ const Invoiced = ({ data, customer_additional_contacts }: any) => {
     },
   ];
 
-  const commonStyle = `flex justify-between items-center text-sm`;
+  const commonStyle = `flex justify-between items-center text-sm `;
   const mainDivStyle = `bg-white border  rounded-md  hover:shadow-lg hover:transition-shadow hover:duration-500 px-4 py-2.5 h-full`;
 
   return (

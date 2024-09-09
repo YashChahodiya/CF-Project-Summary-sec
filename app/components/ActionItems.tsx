@@ -11,6 +11,8 @@ const ActionItems = () => {
 
   const [data, setData] = useState<any>([]);
 
+  console.log(data, "1232");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -35,7 +37,6 @@ const ActionItems = () => {
           formData
         );
 
-        // Return the data fetched from the API
         setData(response?.data?.data?.modules);
       } catch (error) {
         console.log("Error fetching data:", error);
@@ -79,7 +80,7 @@ const ActionItems = () => {
     },
     dataLabels: {
       enabled: true,
-      formatter: (val: any) => (isNaN(val) ? "" : val), // Remove NaN labels
+      formatter: (val: any) => (isNaN(val) ? "" : val),
     },
   };
 
@@ -87,6 +88,10 @@ const ActionItems = () => {
   const invoices = data?.open_incomplete_item?.opnIncoInvoice[0];
   const bills = data?.open_incomplete_item?.opnIncoBills[0];
   const pos = data?.open_incomplete_item?.opnIncoPurchaseOrder[0];
+
+  console.log(invoices, "1");
+  console.log(bills, "2");
+  console.log(pos, "3");
 
   const cleanData = (values: any) =>
     values.map((val: any) => (isNaN(val) ? null : val));
