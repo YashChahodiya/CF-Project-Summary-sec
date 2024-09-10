@@ -36,7 +36,12 @@ const ProjectSummary = ({ data }: any) => {
   if (isLoading) {
     return (
       <div className="space-y-2 text-sm">
-        <CustomIcon icon={faCalculator} label="Project Summary" />
+        <CustomIcon
+          icon={faCalculator}
+          label="Project Summary"
+          color={`#78AEFE`}
+          bgColor={`#ECF3FF`}
+        />
 
         <div className="flex flex-col gap-3.5">
           {/* top */}
@@ -99,7 +104,13 @@ const ProjectSummary = ({ data }: any) => {
 
   return (
     <div className="space-y-2 text-sm">
-      <CustomIcon icon={faCalculator} label="Project Summary" />
+      <CustomIcon
+        icon={faCalculator}
+        label="Project Summary"
+        color={`#78AEFE`}
+        bgColor={`#ECF3FF`}
+        className="text-base"
+      />
 
       <div className="flex flex-col gap-3.5">
         {/* top */}

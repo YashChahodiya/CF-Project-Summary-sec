@@ -78,7 +78,7 @@ const Invoiced = ({ data, customer_additional_contacts }: any) => {
     <div className="flex flex-col gap-3">
       <div className={mainDivStyle}>
         <div className="flex justify-start items-center gap-3 w-full  ">
-          <div className="bg-[#ffd1a7dd] w-12 h-10 rounded-full flex justify-center items-center text-[#FB8056] ">
+          <div className="bg-[#ffe8d2dd] w-12 h-10 rounded-full flex justify-center items-center text-[#FB8056] ">
             <FontAwesomeIcon icon={faUserGroup} className="text-base" />
           </div>
           <div className=" w-full">
@@ -98,7 +98,12 @@ const Invoiced = ({ data, customer_additional_contacts }: any) => {
       </div>
 
       <div className={mainDivStyle}>
-        <CustomIcon icon={faFileChartColumn} label="Invoiced vs Actual" />
+        <CustomIcon
+          icon={faFileChartColumn}
+          label="Invoiced vs Actual"
+          bgColor="#F3ECF5"
+          color="#CE6698"
+        />
         {isLoading ? (
           <InvoicedSkeleton />
         ) : (

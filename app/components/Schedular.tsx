@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import "dhtmlx-scheduler/codebase/dhtmlxscheduler.css";
 import "../styles/dhtmlxs.css";
 import { faCalendarDay } from "@fortawesome/pro-solid-svg-icons";
 import axios from "axios";
+import CustomIcon from "./CustomIcon";
 
 const SchedulerWidget = () => {
   const [data, setData] = useState<any>([]);
+  const schedulerContainer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,19 +45,16 @@ const SchedulerWidget = () => {
     }, 500);
 
     return () => {
-      // Cleanup function to be called when the component unmounts
-      // console.log("Cleanup function called");
       clearTimeout(timeOut);
     };
   }, []);
-
-  const schedulerContainer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const loadScheduler = async () => {
       const scheduler: any = (await import("dhtmlx-scheduler")).default;
 
       if (schedulerContainer.current) {
+        // Define the scheduler configuration
         scheduler.config.header = ["date", "prev", "today", "next"];
         scheduler.config.multi_day = false;
         scheduler.config.first_hour = 0;
@@ -67,8 +64,36 @@ const SchedulerWidget = () => {
         scheduler.config.drag_resize = false;
         scheduler.config.drag_move = false;
         scheduler.xy.scale_width = 0;
-
+        scheduler.config.responsive = true;
         scheduler.config.left_border = false;
+
+        // Function to reset the scheduler configuration
+        const resetConfig = () => {
+          if (window.innerWidth < 768) {
+            scheduler.config.header = ["date", "prev", "next"];
+            scheduler.xy.scale_width = 30;
+          } else {
+            scheduler.config.header = ["date", "prev", "today", "next"];
+            scheduler.xy.scale_width = 50;
+          }
+          // Only update the view after initialization
+          if (schedulerContainer.current) {
+            scheduler.updateView();
+          }
+          return true;
+        };
+
+        // Initialize the scheduler after setting configuration
+        const currentDate = new Date();
+        scheduler.init(schedulerContainer.current, currentDate, "week");
+
+        scheduler.parse(data); // Populate the scheduler with data
+
+        resetConfig(); // Call resetConfig after initialization
+
+        // Attach event listeners for responsiveness
+        scheduler.attachEvent("onBeforeViewChange", resetConfig);
+        scheduler.attachEvent("onSchedulerResize", resetConfig);
 
         scheduler.templates.event_class = function (
           start: any,
@@ -78,16 +103,12 @@ const SchedulerWidget = () => {
           return event.classname || "";
         };
 
-        const currentDate = new Date();
-        scheduler.init(schedulerContainer.current, currentDate, "week");
-        scheduler.parse(data);
-
         scheduler.templates.week_scale_date = function (date: Date) {
           return scheduler.date.date_to_str("%D, %F %j")(date);
         };
 
         scheduler.ignore_week = function (date: Date) {
-          if (date.getDay() == 0 || date.getDay() == 6) return true;
+          if (date.getDay() === 0 || date.getDay() === 6) return true;
         };
 
         scheduler.templates.week_date = function (start: Date) {
@@ -104,33 +125,35 @@ const SchedulerWidget = () => {
           )} ${end.getFullYear()}`;
         };
 
-        scheduler.updateView();
+        // Add event listener for window resize to make the scheduler responsive
+        window.addEventListener("resize", resetConfig);
       }
     };
+
     loadScheduler();
+
     return () => {
       import("dhtmlx-scheduler").then((module: any) =>
         module.default.clearAll()
       );
     };
-  }, []);
+  }, [data]); // Ensure this effect runs when 'data' changes
 
   return (
-    <div className="w-full  relative ">
-      <div className="space-y-2 text-sm absolute z-50 top-2">
-        <div className="flex gap-2 items-center">
-          <div className="bg-blue-100 w-8 h-8  rounded-full flex justify-center items-center">
-            <FontAwesomeIcon icon={faCalendarDay} className="text-base" />
-          </div>
-          <span className="font-semibold text-xl">Project Summary</span>
-        </div>
+    <div className="w-full relative">
+      <div className="absolute top-4 z-50">
+        <CustomIcon
+          icon={faCalendarDay}
+          label="Schedule"
+          bgColor="#ECF3FF"
+          color="#78AEFE"
+        />
       </div>
-      <div>
-        <div
-          ref={schedulerContainer}
-          style={{ width: "100%", height: "100%" }}
-        ></div>
-      </div>
+
+      <div
+        ref={schedulerContainer}
+        style={{ width: "100%", height: "100%" }}
+      ></div>
     </div>
   );
 };
