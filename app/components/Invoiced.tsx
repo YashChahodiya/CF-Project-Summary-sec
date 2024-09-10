@@ -12,7 +12,7 @@ import CustomIcon from "./CustomIcon";
 const Invoiced = ({ data, customer_additional_contacts }: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  console.log("invoiced", data);
+  console.log("invoiced", customer_additional_contacts);
   const {
     amount_invoiced,
     original_contract_amount,
@@ -104,7 +104,7 @@ const Invoiced = ({ data, customer_additional_contacts }: any) => {
         ) : (
           <div className="space-y-1 mt-3">
             {Items.map((i) => (
-              <p className={commonStyle}>
+              <p className={commonStyle} key={i.id}>
                 {i.label}{" "}
                 <span className={`${i.color} font-semibold`}>{i.value}</span>
               </p>

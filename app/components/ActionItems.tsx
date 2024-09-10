@@ -6,6 +6,9 @@ import CustomIcon from "./CustomIcon";
 import { faBoxCircleCheck } from "@fortawesome/pro-solid-svg-icons";
 import axios from "axios";
 
+import Skeleton from "./Skeletons/skeleton";
+import ReactApexChart from "react-apexcharts";
+
 const ActionItems = () => {
   const [ReactApexChart, setReactApexChart] = useState<any>();
 
@@ -52,9 +55,13 @@ const ActionItems = () => {
     };
   }, []);
 
+  // FOR REMIX
   useEffect(() => {
     import("react-apexcharts").then((d) => setReactApexChart(() => d.default));
   }, []);
+
+  // HTML
+  // const ReactApexChart = require("react-apexcharts").default;
 
   const options: ApexOptions = {
     chart: {
@@ -128,7 +135,18 @@ const ActionItems = () => {
       <CustomIcon icon={faBoxCircleCheck} label="Action-Items" />
 
       {!ReactApexChart ? (
-        <p>Loading...</p>
+        <div className="space-y-4">
+          {[...Array(4)].map((_, index) => (
+            <div key={index} className="flex items-center space-x-2">
+              <Skeleton className="w-8 h-4" />
+              <Skeleton
+                className={`h-14 ${
+                  index === 1 ? "w-3/4" : index === 2 ? "w-full" : "w-1/2"
+                }`}
+              />
+            </div>
+          ))}
+        </div>
       ) : (
         <ReactApexChart
           type="bar"

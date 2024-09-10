@@ -1,8 +1,20 @@
 import { faFileLines } from "@fortawesome/pro-solid-svg-icons";
 import { formatCurrency } from "~/helpers";
 import CustomIcon from "./CustomIcon";
+import { useEffect, useState } from "react";
+import Skeleton from "./Skeletons/skeleton";
 
 const WorkInprogress = ({ data }: any) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
+  console.log("Work in progress", data);
+
   const {
     cost_completed,
     current_cost_budget,
@@ -81,7 +93,11 @@ const WorkInprogress = ({ data }: any) => {
         {Items.map((i) => (
           <p className="flex justify-between items-center text-sm" key={i.id}>
             {i.label}{" "}
-            <span className={`${i.color} font-semibold`}>{i.value}</span>
+            {isLoading ? (
+              <Skeleton className="w-6 h-3 rounded-xl" />
+            ) : (
+              <span className={`${i.color} font-semibold`}>{i.value}</span>
+            )}
           </p>
         ))}
       </div>

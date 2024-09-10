@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Module</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="./public/build/root-OYMQ5UUU.css" />
+    <link
+      rel="stylesheet"
+      href="
+https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.52.0/apexcharts.min.css"
+      integrity="sha512-w3pXofOHrtYzBYpJwC6TzPH6SxD6HLAbT/rffdkA759nCQvYi5AHy5trNWFboZnj4xtdyK0AFMBtck9eTmwybg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="
+      https://cdn.dhtmlx.com/scheduler/edge/dhtmlxscheduler.css?_gl=1*myqvza*_gcl_au*MTExOTE0OTg4Ny4xNzI0ODM1MTM1*_ga*NjUxMzA1NDg3LjE3MjQ4MzUxMzY.*_ga_N87XPB4GSG*MTcyNTk0NTkxMC4xMy4xLjE3MjU5NDU5NjIuOC4wLjA."
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body class="bg-[#ECEDED] text-[#293573] selection:bg-indigo-100">
+    <div id="root1"></div>
+
+    <!--    // add the webviewer file to display the pdf and use the window object to
+    show that pdf express viewer -->
+    <script src="https://unpkg.com/comlink/dist/umd/comlink.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.52.0/apexcharts.min.js"
+      integrity="sha512-piY4QAXPoG2xLdUZZbcc5klXzMxckrQKY9A2o6nKDRt9inolvvLbvGPC+z9IZ29b28UJlD05B7CjxxPaxh4bjQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdn.dhtmlx.com/scheduler/edge/dhtmlxscheduler.js?_gl=1*1eeywpj*_gcl_au*MTExOTE0OTg4Ny4xNzI0ODM1MTM1*_ga*NjUxMzA1NDg3LjE3MjQ4MzUxMzY.*_ga_N87XPB4GSG*MTcyNTk0NTkxMC4xMy4xLjE3MjU5NDU5MjkuNDEuMC4w"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script type="module">
+      async function loadComponent(workerScript, rootId) {
+        const root = document.getElementById(rootId);
+        // root.innerHTML = "Loading...";
+
+        try {
+          const worker = new Worker(workerScript, { type: "module" });
+          const { renderComponent } = Comlink.wrap(worker);
+          const html = await renderComponent();
+          root.innerHTML = html;
+          worker.terminate();
+          await import("./public/client.bundle.js");
+        } catch (error) {
+          console.error(`Error loading component: ${error}`);
+          root.innerHTML = "Error loading component";
+        }
+      }
+
+      loadComponent("./public/project.worker.bundle.js", "root1");
+    </script>
+  </body>
+</html>
