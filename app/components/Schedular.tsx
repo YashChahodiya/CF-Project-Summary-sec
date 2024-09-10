@@ -78,22 +78,22 @@ const SchedulerWidget = () => {
           return event.classname || "";
         };
 
-        const currentDate = new Date(2024, 8, 1);
+        const currentDate = new Date();
         scheduler.init(schedulerContainer.current, currentDate, "week");
         scheduler.parse(data);
 
         scheduler.templates.week_scale_date = function (date: Date) {
-          return scheduler.date.date_to_str("%D, %j %M")(date);
+          return scheduler.date.date_to_str("%D, %F %j")(date);
         };
 
         scheduler.ignore_week = function (date: Date) {
-          if (date.getDay() == 0 || date.getDay() == 7) return true;
+          if (date.getDay() == 0 || date.getDay() == 6) return true;
         };
 
         scheduler.templates.week_date = function (start: Date) {
-          const end = scheduler.date.add(start, 7, "day");
+          const end = scheduler.date.add(start, 6, "day");
           const formatDate = (date: Date) => {
-            const day = date.getDate();
+            const day = date.getDate() - 1;
             const month = date.toLocaleString("default", { month: "short" });
             return `${day} ${month}`;
           };

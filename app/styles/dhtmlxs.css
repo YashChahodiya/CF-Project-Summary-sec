@@ -1,19 +1,15 @@
-
-
 .dhx_cal_header {
-    background-color: #2235581A !important; 
-   
-    
-  }
-  .dhx_cal_data {
-    overflow-y: hidden !important; 
-  }
-  
-  .dhx_scale_time{
-    overflow-y: hidden;
-  }
+  background-color: rgba(34, 53, 88, 0.1) !important;
+}
+.dhx_cal_data {
+  overflow-y: hidden !important;
+}
 
-  /* dhx_resize_denied dhx_move_denied */
-  .dhx_cal_data { 
-   display: none;
-  }
+.dhx_scale_time {
+  overflow-y: hidden;
+}
+
+/* dhx_resize_denied dhx_move_denied */
+.dhx_cal_data {
+  display: none;
+}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ApexOptions } from "apexcharts";
 import { faSackDollar } from "@fortawesome/pro-solid-svg-icons";
 import CustomIcon from "./CustomIcon";
+import Skeleton from "./Skeletons/skeleton";
 
 const SummaryPercentages = ({ data }: any) => {
   const billing_vs_actual = data?.billing_vs_actual;
@@ -19,12 +20,16 @@ const SummaryPercentages = ({ data }: any) => {
     }).format(value);
   };
 
-  console.log("qwqwqwqw", data);
-  const [ReactApexChart, setReactApexChart] = useState<any>();
+  // console.log("qwqwqwqw", data);
+  // const [ReactApexChart, setReactApexChart] = useState<any>();
 
-  useEffect(() => {
-    import("react-apexcharts").then((d) => setReactApexChart(() => d.default));
-  }, []);
+  // FOR REMIX
+  // useEffect(() => {
+  //   import("react-apexcharts").then((d) => setReactApexChart(() => d.default));
+  // }, []);
+
+  // HTML
+  const ReactApexChart = require("react-apexcharts").default;
 
   const options: ApexOptions = {
     chart: {
@@ -95,7 +100,9 @@ const SummaryPercentages = ({ data }: any) => {
       <CustomIcon icon={faSackDollar} label="Summary Percentages" />
 
       {!ReactApexChart ? (
-        <p>Loading...</p>
+        <div className="mt-5">
+          <ChartSkeleton />
+        </div>
       ) : (
         <ReactApexChart
           type="bar"
@@ -109,3 +116,26 @@ const SummaryPercentages = ({ data }: any) => {
 };
 
 export default SummaryPercentages;
+
+const ChartSkeleton = () => {
+  return (
+    <div className="relative h-64 ">
+      {/* Y-axis labels */}
+      <div className="absolute left-0 top-0 bottom-0 flex flex-col justify-between py-2">
+        {[...Array(6)].map((_, index) => (
+          <Skeleton key={index} className="w-10 h-2" />
+        ))}
+      </div>
+
+      {/* Chart bars */}
+      <div className="absolute left-14  right-0 top-0 bottom-8 flex justify-between items-end">
+        {[10, 16, 60, 20, 40].map((height, index) => (
+          <div key={index} className="flex flex-col items-center">
+            <Skeleton className={`w-12 mb-1 h-${height}`} />
+            <Skeleton className="w-16 h-2" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};

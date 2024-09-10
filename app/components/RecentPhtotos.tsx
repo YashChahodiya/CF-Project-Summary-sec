@@ -17,14 +17,29 @@ const RecentPhtotos = ({ data }: any) => {
       <CustomIcon icon={faFileImage} label="Recent Photos" />
 
       {isLoading ? (
-        <div className="flex flex-wrap gap-4">
+        <div className="grid grid-cols-4 gap-4  mt-4 w-full">
           {[...Array(8)].map((_, i) => (
-            <Skeleton key={i} className="w-20 h-20 rounded-md"></Skeleton>
+            <Skeleton
+              key={i}
+              className="w-20 h-20 rounded-md col-span-1"
+            ></Skeleton>
           ))}
         </div>
       ) : (
         <div className="flex justify-center items-center w-full h-full">
-          <img src="/NoPage.svg" alt="" />
+          {data?.aws_files > 0 ? (
+            data?.aws_files?.map((i: any) => (
+              <div key={i.id} className="w-20 h-20 rounded-md col-span">
+                <img
+                  src={i.url}
+                  alt={i.name}
+                  className="w-full h-full rounded-md"
+                />
+              </div>
+            ))
+          ) : (
+            <img src="../../public/NoPage.svg" alt="" />
+          )}
         </div>
       )}
     </div>
