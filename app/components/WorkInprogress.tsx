@@ -87,9 +87,14 @@ const WorkInprogress = ({ data }: any) => {
 
   return (
     <>
-      <CustomIcon icon={faFileLines} label="Work In Progress (WIP)" />
+      <CustomIcon
+        icon={faFileLines}
+        label="Work In Progress (WIP)"
+        bgColor="#F3EEFD"
+        color="#8C55E9"
+      />
 
-      <div className="pt-2.5 flex flex-col gap-[1.7px]">
+      <div className="pt-2.5 flex flex-col gap-[1px] lg:gap-[1.7px]">
         {Items.map((i) => (
           <p className="flex justify-between items-center text-sm" key={i.id}>
             {i.label}{" "}

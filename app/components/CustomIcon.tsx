@@ -1,12 +1,35 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const CustomIcon = ({ icon, className, label }: any) => {
+interface CustomIconProps {
+  icon?: any;
+  className?: string;
+  bgColor?: string;
+  color?: string;
+  iconClassName?: string;
+  label?: string;
+}
+
+const CustomIcon = ({
+  icon,
+  className,
+  bgColor,
+  color,
+  iconClassName,
+  label,
+}: CustomIconProps) => {
+  console.log("bgColor", bgColor);
+  console.log("Color", color);
   return (
     <div className="flex gap-2 items-center">
       <div
-        className={`bg-blue-100 w-7 h-7 rounded-full flex justify-center items-center ${className}`}
+        style={{ backgroundColor: bgColor }}
+        className={`bg-blue-100 w-8 h-8 rounded-full flex justify-center items-center ${className}`}
       >
-        <FontAwesomeIcon icon={icon} />
+        <FontAwesomeIcon
+          icon={icon}
+          style={{ color: color }}
+          className={iconClassName}
+        />
       </div>
       <span className="font-semibold text-base">{label}</span>
     </div>

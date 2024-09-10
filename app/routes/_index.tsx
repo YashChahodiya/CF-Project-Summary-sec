@@ -1,25 +1,25 @@
 import type { MetaFunction } from "@remix-run/node";
 import axios from "axios";
 import { lazy, Suspense, useEffect, useState } from "react";
-import Top from "~/components/Top";
-import ProjectSummary from "../components/ProjectSummary";
-import SummaryPercentages from "../components/SummaryPercentages";
-import ActionItems from "~/components/ActionItems";
-import Invoiced from "~/components/Invoiced";
-import WorkInprogress from "~/components/WorkInprogress";
-import RecentPhtotos from "~/components/RecentPhtotos";
-import Schedular from "~/components/Schedular";
+// import Top from "~/components/Top";
+// import ProjectSummary from "../components/ProjectSummary";
+// import SummaryPercentages from "../components/SummaryPercentages";
+// import ActionItems from "~/components/ActionItems";
+// import Invoiced from "~/components/Invoiced";
+// import WorkInprogress from "~/components/WorkInprogress";
+// import RecentPhtotos from "~/components/RecentPhtotos";
+// import Schedular from "~/components/Schedular";
 
-// const ProjectSummary = lazy(() => import("../components/ProjectSummary"));
-// const Invoiced = lazy(() => import("../components/Invoiced"));
-// const ActionItems = lazy(() => import("../components/ActionItems"));
-// const SummaryPercentages = lazy(
-//   () => import("../components/SummaryPercentages")
-// );
-// const WorkInprogress = lazy(() => import("../components/WorkInprogress"));
-// const RecentPhtotos = lazy(() => import("../components/RecentPhtotos"));
-// const Schedular = lazy(() => import("../components/Schedular"));
-// const Top = lazy(() => import("../components/Top"));
+const ProjectSummary = lazy(() => import("../components/ProjectSummary"));
+const Invoiced = lazy(() => import("../components/Invoiced"));
+const ActionItems = lazy(() => import("../components/ActionItems"));
+const SummaryPercentages = lazy(
+  () => import("../components/SummaryPercentages")
+);
+const WorkInprogress = lazy(() => import("../components/WorkInprogress"));
+const RecentPhtotos = lazy(() => import("../components/RecentPhtotos"));
+const Schedular = lazy(() => import("../components/Schedular"));
+const Top = lazy(() => import("../components/Top"));
 
 export const meta: MetaFunction = () => {
   return [
@@ -116,51 +116,51 @@ export default function Index() {
   return (
     <div className="space-y-4 p-4 overflow-y-auto sidebar">
       <div className="w-full">
-        {/* <Suspense fallback={<p>Loading Project topbar...</p>}> */}
-        <Top data={billing_vs_actual} />
-        {/* </Suspense> */}
+        <Suspense fallback={<p>Loading Project topbar...</p>}>
+          <Top data={billing_vs_actual} />
+        </Suspense>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
         <div className={`${commonStyle} p-4`}>
-          {/* <Suspense fallback={<p>Loading Project Summary...</p>}> */}
-          <ProjectSummary data={project_summary} />
-          {/* </Suspense> */}
+          <Suspense fallback={<p>Loading Project Summary...</p>}>
+            <ProjectSummary data={project_summary} />
+          </Suspense>
         </div>
         <div className={`${commonStyle} px-4 pt-4`}>
-          {/* <Suspense fallback={<p>Loading Summary Percentages...</p>}> */}
-          <SummaryPercentages data={data} />
-          {/* </Suspense> */}
+          <Suspense fallback={<p>Loading Summary Percentages...</p>}>
+            <SummaryPercentages data={data} />
+          </Suspense>
         </div>
         <div className={`${commonStyle} px-4 pt-4`}>
-          {/* <Suspense fallback={<p>Loading Action Items...</p>}> */}
-          <ActionItems />
-          {/* </Suspense> */}
+          <Suspense fallback={<p>Loading Action Items...</p>}>
+            <ActionItems />
+          </Suspense>
         </div>
         <div>
-          {/* <Suspense fallback={<p>Loading Invoiced...</p>}> */}
-          <Invoiced
-            data={billing_vs_actual}
-            customer_additional_contacts={customer_additional_contacts}
-          />
-          {/* </Suspense> */}
+          <Suspense fallback={<p>Loading Invoiced...</p>}>
+            <Invoiced
+              data={billing_vs_actual}
+              customer_additional_contacts={customer_additional_contacts}
+            />
+          </Suspense>
         </div>
-        <div className={`${commonStyle} px-4 pt-4`}>
-          {/* <Suspense fallback={<p>Loading Work In Progress...</p>}> */}
-          <WorkInprogress data={wip_widget} />
-          {/* </Suspense> */}
+        <div className={`${commonStyle} px-4 pb-2 lg:pt-4`}>
+          <Suspense fallback={<p>Loading Work In Progress...</p>}>
+            <WorkInprogress data={wip_widget} />
+          </Suspense>
         </div>
         <div className={`${commonStyle} p-4`}>
-          {/* <Suspense fallback={<p>Loading Recent Photos...</p>}> */}
-          <RecentPhtotos data={data} />
-          {/* </Suspense> */}
+          <Suspense fallback={<p>Loading Recent Photos...</p>}>
+            <RecentPhtotos data={data} />
+          </Suspense>
         </div>
       </div>
 
-      <div className={`${commonStyle} p-4 h-60`}>
-        {/* <Suspense fallback={<p>Loading Scheduler...</p>}> */}
-        <Schedular />
-        {/* </Suspense> */}
+      <div className={`${commonStyle} px-4 h-60`}>
+        <Suspense fallback={<p>Loading Scheduler...</p>}>
+          <Schedular />
+        </Suspense>
       </div>
     </div>
   );

@@ -132,7 +132,13 @@ const SummaryPercentages = ({ data }: any) => {
 
   return (
     <div className="h-full">
-      <CustomIcon icon={faSackDollar} label="Summary Percentages" />
+      <CustomIcon
+        icon={faSackDollar}
+        label="Summary Percentages"
+        bgColor="#FEF6E5"
+        color="#F8AB07"
+        className="text-base"
+      />
 
       {!ReactApexChart ? (
         <div className="mt-5">
@@ -142,6 +148,7 @@ const SummaryPercentages = ({ data }: any) => {
         <ReactApexChart
           type="bar"
           height={307}
+          responsive
           options={options}
           series={series}
         />

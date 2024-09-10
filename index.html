@@ -8,6 +8,30 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="stylesheet" href="./public/build/root-OYMQ5UUU.css" />
+    <link rel="stylesheet" href="./public/client.bundle.css" />
+    <link rel="stylesheet" href="./public/project.worker.bundle.css" />
+    <link rel="stylesheet" href="./app/styles/light-gallery.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/css/lightgallery.min.css"
+      integrity="sha512-F2E+YYE1gkt0T5TVajAslgDfTEUQKtlu4ralVq78ViNxhKXQLrgQLLie8u1tVdG2vWnB3ute4hcdbiBtvJQh0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/css/lg-thumbnail.min.css"
+      integrity="sha512-GRxDpj/bx6/I4y6h2LE5rbGaqRcbTu4dYhaTewlS8Nh9hm/akYprvOTZD7GR+FRCALiKfe8u1gjvWEEGEtoR6g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/css/lg-zoom.min.css"
+      integrity="sha512-vIrTyLijDDcUJrQGs1jduUCSVa3+A2DaWpVfNyj4lmXkqURVQJ8LL62nebC388QV3P4yFBSt/ViDX8LRW0U6uw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link
       rel="stylesheet"
       href="
@@ -53,14 +77,14 @@ https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.52.0/apexcharts.min.css"
           const html = await renderComponent();
           root.innerHTML = html;
           worker.terminate();
-          await import("./public/client.bundle.js");
+          await import("./public/client/client.js");
         } catch (error) {
           console.error(`Error loading component: ${error}`);
           root.innerHTML = "Error loading component";
         }
       }
 
-      loadComponent("./public/project.worker.bundle.js", "root1");
+      loadComponent("./public/project/project.worker.js", "root1");
     </script>
   </body>
 </html>

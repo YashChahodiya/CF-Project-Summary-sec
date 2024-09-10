@@ -72,14 +72,23 @@ const ActionItems = () => {
         show: false,
       },
     },
+
     plotOptions: {
       bar: {
         horizontal: true,
-        columnWidth: "20%",
-        barHeight: "50%",
+        dataLabels: {
+          total: {
+            enabled: true,
+            offsetX: 0,
+            style: {
+              fontSize: "13px",
+              fontWeight: 900,
+            },
+          },
+        },
       },
     },
-    xaxis: { categories: ["OPEN", "DUE", "CLOSED"] },
+    xaxis: { categories: ["OPEN", "DUE", "CLOSED"], tickPlacement: "on" },
     colors: ["#684CC7", "#e01f35", "#282691"],
     legend: {
       show: true,
@@ -92,9 +101,9 @@ const ActionItems = () => {
   };
 
   // invoices
-  const invoices = data?.open_incomplete_item?.opnIncoInvoice[0];
-  const bills = data?.open_incomplete_item?.opnIncoBills[0];
-  const pos = data?.open_incomplete_item?.opnIncoPurchaseOrder[0];
+  const invoices = data?.open_incomplete_item?.opnIncoInvoice[0] || {};
+  const bills = data?.open_incomplete_item?.opnIncoBills[0] || {};
+  const pos = data?.open_incomplete_item?.opnIncoPurchaseOrder[0] || {};
 
   console.log(invoices, "1");
   console.log(bills, "2");
@@ -106,33 +115,30 @@ const ActionItems = () => {
   const series = [
     {
       name: "Invocies",
-      data: cleanData([
-        Number(invoices?.total_open),
-        Number(invoices?.total_due),
-        Number(invoices?.total_close),
-      ]),
+      data: [
+        Number(invoices?.total_open) || 0,
+        Number(invoices?.total_due) || 0,
+        Number(invoices?.total_close) || 0,
+      ],
     },
     {
       name: "Bills",
-      data: cleanData([
-        Number(bills?.total_open),
-        Number(bills?.bill_count),
-        Number(bills?.total_close),
-      ]),
-    },
-    {
-      name: "Purchase Orders",
-      data: cleanData([
-        Number(pos?.total_open),
-        Number(pos?.bill_count),
-        Number(pos?.total_close),
-      ]),
+      data: [
+        Number(bills?.total_open) || 0,
+        Number(bills?.bill_count) || 0,
+        Number(bills?.total_close) || 0,
+      ],
     },
   ];
 
   return (
     <div className="h-full">
-      <CustomIcon icon={faBoxCircleCheck} label="Action-Items" />
+      <CustomIcon
+        icon={faBoxCircleCheck}
+        label="Action-Items"
+        bgColor="#ECF3FE"
+        color="#7FB2FF"
+      />
 
       {!ReactApexChart ? (
         <div className="space-y-4">
@@ -150,6 +156,7 @@ const ActionItems = () => {
       ) : (
         <ReactApexChart
           type="bar"
+          responsive
           options={options}
           series={series}
           height={307}
