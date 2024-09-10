@@ -50,7 +50,15 @@ const SummaryPercentages = ({ data }: any) => {
     xaxis: {
       categories: ["Committed", "Actual", "Labor", "Invoiced"],
     },
-
+    yaxis: {
+      labels: {
+        formatter: function (val: number) {
+          return `${val.toFixed(0)}%`;
+        },
+      },
+      min: 0,
+      max: 1000,
+    },
     dataLabels: {
       enabled: false, // Disable default data labels on the chart
     },
@@ -78,18 +86,18 @@ const SummaryPercentages = ({ data }: any) => {
     {
       name: "Invoiced to Date",
       data: [
-        all_item_total?.total?.commited_total,
-        all_item_total?.total?.actual_total,
-        all_item_total?.labor?.actual_total,
+        Number(all_item_total?.total?.commited_total),
+        Number(all_item_total?.total?.actual_total),
+        Number(all_item_total?.labor?.actual_total),
         Number(billing_vs_actual?.amount_invoiced / 100),
       ],
     },
     {
       name: "Total Project Amount",
       data: [
-        all_item_total?.unassigned?.estimated_total,
-        all_item_total?.total?.estimated_total,
-        all_item_total?.labor?.estimated_total,
+        Number(all_item_total?.unassigned?.estimated_total),
+        Number(all_item_total?.total?.estimated_total),
+        Number(all_item_total?.labor?.estimated_total),
         Number(billing_vs_actual?.original_contract_amount / 100),
       ],
     },

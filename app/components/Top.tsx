@@ -15,9 +15,11 @@ const Top = ({ data }: any) => {
     {
       id: 1,
       label: "Gross Profit",
-      label2: `(${((data?.gross_profit * 100) / data?.amount_invoiced).toFixed(
-        2
-      )}%)`,
+      label2: `(${
+        Number(data?.gross_profit) > 0
+          ? ((data?.gross_profit * 100) / data?.amount_invoiced).toFixed(2)
+          : "0"
+      }%)`,
       values: `${formatCurrency(Number(data?.gross_profit))}`,
       icon: faCalculator,
       color: `#9ABA04`,
