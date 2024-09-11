@@ -1,14 +1,6 @@
 import type { MetaFunction } from "@remix-run/node";
 import axios from "axios";
 import { lazy, Suspense, useEffect, useState } from "react";
-// import Top from "~/components/Top";
-// import ProjectSummary from "../components/ProjectSummary";
-// import SummaryPercentages from "../components/SummaryPercentages";
-// import ActionItems from "~/components/ActionItems";
-// import Invoiced from "~/components/Invoiced";
-// import WorkInprogress from "~/components/WorkInprogress";
-// import RecentPhtotos from "~/components/RecentPhtotos";
-// import Schedular from "~/components/Schedular";
 
 const ProjectSummary = lazy(() => import("../components/ProjectSummary"));
 const Invoiced = lazy(() => import("../components/Invoiced"));
@@ -51,7 +43,7 @@ export default function Index() {
       // Fetch fresh data
       const formData = new FormData();
       formData.append("op", "get_project_detail");
-      formData.append("project_id", "147534");
+      formData.append("project_id", "137869");
       formData.append("is_refresh", "0");
       formData.append("record_type", "project");
       formData.append("version", "web");
@@ -62,11 +54,11 @@ export default function Index() {
       formData.append("curr_time", new Date().toISOString());
       formData.append("force_login", "0");
       formData.append("global_project", "");
-      formData.append("user_id", "109871");
-      formData.append("company_id", "829");
+      formData.append("user_id", "50304");
+      formData.append("company_id", "408");
 
       const response = await axios.post(
-        "https://api-cfdev.contractorforeman.net/service.php?opp=get_project_detail&c=829&u=109871&p=manage_projects",
+        "https://api-cfdev.contractorforeman.net/service.php?opp=get_project_detail&c=408&u=50304&p=manage_projects",
         formData
       );
 
@@ -140,7 +132,7 @@ export default function Index() {
         <div>
           <Suspense fallback={<p>Loading Invoiced...</p>}>
             <Invoiced
-              data={billing_vs_actual}
+              data={data}
               customer_additional_contacts={customer_additional_contacts}
             />
           </Suspense>

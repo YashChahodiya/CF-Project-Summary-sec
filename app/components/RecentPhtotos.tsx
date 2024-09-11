@@ -15,12 +15,7 @@ const RecentPhotos = ({ data }: any) => {
 
   return (
     <div className="h-full">
-      <CustomIcon
-        icon={faFileImage}
-        label="Recent Photos"
-        bgColor="#ECFAF6"
-        color="#68D6B2"
-      />
+      <CustomIcon icon={faFileImage} label="Recent Photos" />
 
       {isLoading ? (
         <div className="grid grid-cols-5 gap-4 mt-4 w-full">
@@ -32,7 +27,7 @@ const RecentPhotos = ({ data }: any) => {
           ))}
         </div>
       ) : (
-        <div className="flex justify-center items-center w-full h-full">
+        <div className="w-full">
           <CFGallery
             zoom={true}
             animateThumb={false}
@@ -47,26 +42,29 @@ const RecentPhotos = ({ data }: any) => {
             className="flex gap-[15px] flex-wrap"
             mousewheel={true}
           >
-            {data?.aws_files?.length > 0 ? (
-              data?.aws_files.map((i: any, index: number) => (
-                <div key={index} className="grid grid-cols-5 gap-4 w-full">
-                  <a
-                    href={i?.file?.file_path}
-                    download={!i?.file?.is_image}
-                    className="light-gallery overflow-hidden rounded-md"
-                    data-sub-html={`<h4>${i?.file?.file_name}</h4>`}
-                  >
-                    <img
-                      src={i.file?.file_path}
-                      alt={i.name}
-                      className="w-20 h-20 rounded-md col-span-1 cursor-pointer transition-transform duration-300 ease-out transform hover:scale-110"
-                    />
-                  </a>
-                </div>
-              ))
-            ) : (
-              <img src="../../public/NoPage.svg" alt="" />
-            )}
+            <div className="grid grid-cols-5 gap-4 w-full mt-4">
+              {data?.aws_files?.length > 0 ? (
+                data?.aws_files.map(
+                  ({ image_id, file_path, is_image, file_name }: any) => (
+                    <a
+                      key={image_id}
+                      href={file_path}
+                      download={!is_image}
+                      className="light-gallery overflow-hidden rounded-md"
+                      data-sub-html={`<h4>${file_name}</h4>`}
+                    >
+                      <img
+                        src={file_path}
+                        alt={file_name}
+                        className="w-20 h-20 object-cover rounded-md cursor-pointer hover:scale-110 transition-transform duration-500"
+                      />
+                    </a>
+                  )
+                )
+              ) : (
+                <img src="../../public/NoPage.svg" alt="No Photos" />
+              )}
+            </div>
           </CFGallery>
         </div>
       )}

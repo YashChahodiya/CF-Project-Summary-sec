@@ -19,7 +19,7 @@ const Invoiced = ({ data, customer_additional_contacts }: any) => {
     remain_to_invoice,
     total_actual_cost,
     gross_profit,
-  } = data;
+  } = data?.billing_vs_actual;
 
   const invoicedPercentage = (
     (parseFloat(amount_invoiced) / parseFloat(original_contract_amount)) *
@@ -84,11 +84,7 @@ const Invoiced = ({ data, customer_additional_contacts }: any) => {
           <div className=" w-full">
             Customer
             <p className="flex justify-between items-center  font-semibold hover:text-[#FB8056] hover:cursor-pointer hover:transition-colors hover:duration-700">
-              {customer_additional_contacts[0].first_name +
-                " " +
-                customer_additional_contacts[0].last_name +
-                " " +
-                `(${customer_additional_contacts[0].company_name})`}{" "}
+              {data?.customer_name}{" "}
               <span className="text-[#FB8056] font-semibold">
                 <FontAwesomeIcon icon={faAddressCard} className="text-sm" />
               </span>

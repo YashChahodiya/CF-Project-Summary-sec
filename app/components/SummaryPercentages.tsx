@@ -72,6 +72,11 @@ const SummaryPercentages = ({ data }: any) => {
       min: 0,
       max: 1000,
     },
+
+    stroke: {
+      colors: ["transparent"],
+      width: 5,
+    },
     tooltip: {
       shared: true,
       intersect: false,
@@ -106,27 +111,20 @@ const SummaryPercentages = ({ data }: any) => {
     {
       name: "Actual Cost",
       data: [
-        calculatePercentage(
-          all_item_total?.total?.commited_total,
-          all_item_total?.unassigned?.estimated_total
-        ),
-        calculatePercentage(
-          all_item_total?.total?.actual_total,
-          all_item_total?.total?.estimated_total
-        ),
-        calculatePercentage(
-          all_item_total?.labor?.actual_total,
-          all_item_total?.labor?.estimated_total
-        ),
-        calculatePercentage(
-          billing_vs_actual?.amount_invoiced / 100,
-          billing_vs_actual?.original_contract_amount / 100
-        ),
+        Number(all_item_total?.total?.commited_total),
+        Number(all_item_total?.total?.actual_total),
+        Number(all_item_total?.labor?.actual_total),
+        Number(billing_vs_actual?.amount_invoiced / 100),
       ],
     },
     {
-      name: "Estimated Cost",
-      data: [100, 100, 100, 100], // Total estimated baseline (100%)
+      name: "Total Project Amount",
+      data: [
+        Number(all_item_total?.unassigned?.estimated_total),
+        Number(all_item_total?.total?.estimated_total),
+        Number(all_item_total?.labor?.estimated_total),
+        Number(billing_vs_actual?.original_contract_amount / 100),
+      ],
     },
   ];
 

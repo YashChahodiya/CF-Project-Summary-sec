@@ -140,7 +140,7 @@ const SchedulerWidget = () => {
 
   return (
     <div className="w-full relative">
-      <div className="absolute top-4 z-50">
+      <div className="lg:absolute mt-4 lg:mt-0 lg:top-4 z-50 ">
         <CustomIcon
           icon={faCalendarDay}
           label="Schedule"
