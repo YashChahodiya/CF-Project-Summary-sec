@@ -36,10 +36,15 @@ export type IndexProps = {
 export default function Index({ projectId, userId, compId }: IndexProps) {
   const [data, setData] = useState<ProjectData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [refresh, setRefresh] = useState(true);
 
-  console.log("projectID", projectId);
+  console.log("projectID>>>>>>>>>>>>>>>>", projectId);
   console.log("userId", userId);
   console.log("compId", compId);
+
+  // useEffect(() => {
+  //   window.location.reload();
+  // }, [projectId]);
 
   const fetchData = async () => {
     try {
@@ -54,7 +59,7 @@ export default function Index({ projectId, userId, compId }: IndexProps) {
 
       const formData = new FormData();
       formData.append("op", "get_project_detail");
-      formData.append("project_id", projectId);
+      formData.append("project_id", projectId.toString() ?? "0");
       formData.append("is_refresh", "0");
       formData.append("record_type", "project");
       formData.append("version", "web");
@@ -62,16 +67,16 @@ export default function Index({ projectId, userId, compId }: IndexProps) {
       formData.append("iframe_call", "0");
       formData.append("tz", "+5:30");
       formData.append("tzid", "Asia/Calcutta");
-      formData.append("curr_time", new Date().toISOString());
+      formData.append("curr_time", new Date().toISOString() ?? "0");
       formData.append("force_login", "0");
       formData.append("global_project", "");
-      formData.append("user_id", userId);
-      formData.append("company_id", compId);
+      formData.append("user_id", userId.toString());
+      formData.append("company_id", compId.toString() ?? "0");
 
       const response = await axios.post(
-        `https://api-cfdev.contractorforeman.net/service.php?opp=get_project_detail&c=${Number(
-          compId
-        )}&u=${Number(userId)}&p=manage_projects`,
+        `https://api-cfdev.contractorforeman.net/service.php?opp=get_project_detail&c=${
+          compId ? Number(compId) : 0
+        }&u=${userId ? Number(userId) : 0}&p=manage_projects`,
         formData
       );
 
@@ -87,10 +92,17 @@ export default function Index({ projectId, userId, compId }: IndexProps) {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      fetchData();
-    }, 500);
-  }, []);
+    if (projectId) {
+      const timer = setTimeout(() => {
+        fetchData();
+      }, 300);
+
+      return () => {
+        // Cleanup function
+        clearTimeout(timer);
+      };
+    }
+  }, [projectId, userId, compId]);
 
   if (isLoading) {
     return (

@@ -17,7 +17,7 @@ const ActionItems = ({ projectId, userId, compId }: IndexProps) => {
       try {
         const formData = new FormData();
         formData.append("op", "get_project_reference_detail");
-        formData.append("project_id", projectId);
+        formData.append("project_id", projectId.toString() ?? "0");
         formData.append("need_more_data", "0");
         formData.append("for_module_key", "");
         formData.append("version", "web");
@@ -28,13 +28,13 @@ const ActionItems = ({ projectId, userId, compId }: IndexProps) => {
         formData.append("curr_time", "2024-08-31 15:50:38");
         formData.append("force_login", "0");
         formData.append("global_project", "");
-        formData.append("user_id", userId);
-        formData.append("company_id", compId);
+        formData.append("user_id", userId.toString() ?? "0");
+        formData.append("company_id", compId.toString() ?? "0");
 
         const response = await axios.post(
-          `https://api-cfdev.contractorforeman.net/service.php?opp=get_project_reference_detail&c=${Number(
-            compId
-          )}&u=${Number(userId)}&p=manage_projects`,
+          `https://api-cfdev.contractorforeman.net/service.php?opp=get_project_reference_detail&c=${
+            compId ? Number(compId) : 0
+          }&u=${userId ? Number(userId) : 0}&p=manage_projects`,
           formData
         );
 
@@ -46,7 +46,7 @@ const ActionItems = ({ projectId, userId, compId }: IndexProps) => {
 
     const timeOut = setTimeout(() => {
       fetchData();
-    }, 500);
+    }, 300);
 
     return () => {
       clearTimeout(timeOut);
@@ -151,7 +151,6 @@ const ActionItems = ({ projectId, userId, compId }: IndexProps) => {
       ) : (
         <ReactApexChart
           type="bar"
-          responsive
           options={options}
           series={series}
           height={307}

@@ -81,24 +81,23 @@ const SummaryPercentages = ({ data }: any) => {
       position: "top",
     },
   };
-  console.log(all_item_total, all_item_total?.total?.estimated_total);
   const series = [
     {
       name: "Invoiced to Date",
       data: [
-        Number(all_item_total?.total?.commited_total),
-        Number(all_item_total?.total?.actual_total),
-        Number(all_item_total?.labor?.actual_total),
-        Number(billing_vs_actual?.amount_invoiced / 100),
+        Number(all_item_total?.total?.commited_total) || 0,
+        Number(all_item_total?.total?.actual_total) || 0,
+        Number(all_item_total?.labor?.actual_total) || 0,
+        Number(billing_vs_actual?.amount_invoiced / 100) || 0,
       ],
     },
     {
       name: "Total Project Amount",
       data: [
-        Number(all_item_total?.unassigned?.estimated_total),
-        Number(all_item_total?.total?.estimated_total),
-        Number(all_item_total?.labor?.estimated_total),
-        Number(billing_vs_actual?.original_contract_amount / 100),
+        Number(all_item_total?.unassigned?.estimated_total) || 0,
+        Number(all_item_total?.total?.estimated_total) || 0,
+        Number(all_item_total?.labor?.estimated_total) || 0,
+        Number(billing_vs_actual?.original_contract_amount / 100) || 0,
       ],
     },
   ];
@@ -121,7 +120,6 @@ const SummaryPercentages = ({ data }: any) => {
         <ReactApexChart
           type="bar"
           height={307}
-          responsive
           options={options}
           series={series}
         />

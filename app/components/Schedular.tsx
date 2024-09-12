@@ -15,7 +15,7 @@ const SchedulerWidget = ({ projectId, userId, compId }: IndexProps) => {
       try {
         const formData = new FormData();
         formData.append("op", "get_schedule_calendar_events");
-        formData.append("project_id", projectId);
+        formData.append("project_id", projectId.toString() ?? "0");
         formData.append("for", "dashboard_summary");
         formData.append("start_date_range", "2024-9-01 00:00:00");
         formData.append("version", "web");
@@ -26,13 +26,13 @@ const SchedulerWidget = ({ projectId, userId, compId }: IndexProps) => {
         formData.append("curr_time", "2024-08-31 15:50:38");
         formData.append("force_login", "0");
         formData.append("global_project", "");
-        formData.append("user_id", userId);
-        formData.append("company_id", compId);
+        formData.append("user_id", userId.toString() ?? "0");
+        formData.append("company_id", compId.toString() ?? "0");
 
         const response = await axios.post(
-          `https://api-cfdev.contractorforeman.net/service.php?opp=get_schedule_calendar_events&c=${Number(
-            compId
-          )}&u=${Number(userId)}&p=manage_projects`,
+          `https://api-cfdev.contractorforeman.net/service.php?opp=get_schedule_calendar_events&c=${
+            compId ? Number(compId) : 0
+          }&u=${userId ? Number(userId) : 0}&p=manage_projects`,
           formData
         );
 
@@ -67,7 +67,7 @@ const SchedulerWidget = ({ projectId, userId, compId }: IndexProps) => {
         scheduler.config.drag_resize = false;
         scheduler.config.drag_move = false;
         scheduler.xy.scale_width = 0;
-        scheduler.config.responsive = true;
+        // scheduler.config.responsive = true;
         scheduler.config.left_border = false;
 
         // Function to reset the scheduler configuration

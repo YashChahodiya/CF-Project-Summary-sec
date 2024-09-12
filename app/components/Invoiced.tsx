@@ -83,7 +83,7 @@ const Invoiced = ({ data, customer_additional_contacts }: any) => {
           </div>
           <div className=" w-full">
             Customer
-            <p className="flex justify-between items-center  font-semibold hover:text-[#FB8056] hover:cursor-pointer hover:transition-colors hover:duration-700">
+            <p className="flex justify-between items-center  font-semibold hover:text-[#FB8056] hover:cursor-pointer hover:transition-all hover:duration-700">
               {data?.customer_name}{" "}
               <span className="text-[#FB8056] font-semibold">
                 <FontAwesomeIcon icon={faAddressCard} className="text-sm" />
