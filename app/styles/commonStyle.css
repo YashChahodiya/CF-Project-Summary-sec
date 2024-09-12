@@ -1,3 +1,8 @@
 .commonStyles {
   @apply flex justify-between items-center text-sm !important;
 }
+
+.ant-modal-content,
+.file-photo-timeline-view .ant-collapse-content .ant-collapse-content-box {
+  @apply !p-0;
+}

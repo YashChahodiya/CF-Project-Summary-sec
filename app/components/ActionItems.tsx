@@ -79,7 +79,7 @@ const ActionItems = () => {
         dataLabels: {
           total: {
             enabled: true,
-            offsetX: 0,
+            offsetX: 10,
             style: {
               fontSize: "13px",
               fontWeight: 900,

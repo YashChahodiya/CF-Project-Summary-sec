@@ -9,9 +9,9 @@ import "./tailwind.css";
 import "./styles/commonStyle.css";
 import "./styles/light-gallery.css";
 
-// import "lightgallery/css/lightgallery.css";
-// import "lightgallery/css/lg-zoom.css";
-// import "lightgallery/css/lg-thumbnail.css";
+import "lightgallery/css/lightgallery.css";
+import "lightgallery/css/lg-zoom.css";
+import "lightgallery/css/lg-thumbnail.css";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";

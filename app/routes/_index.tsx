@@ -1,6 +1,16 @@
 import type { MetaFunction } from "@remix-run/node";
 import axios from "axios";
 import { lazy, Suspense, useEffect, useState } from "react";
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UploadOutlined,
+  UserOutlined,
+  VideoCameraOutlined,
+} from "@ant-design/icons";
+import { Button, Layout, Menu, theme } from "antd";
+
+const { Header, Sider, Content } = Layout;
 
 const ProjectSummary = lazy(() => import("../components/ProjectSummary"));
 const Invoiced = lazy(() => import("../components/Invoiced"));
@@ -30,17 +40,20 @@ interface ProjectData {
 export default function Index() {
   const [data, setData] = useState<ProjectData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
+
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
 
   const fetchData = async () => {
     try {
-      // Check if we have cached data
       const cachedData = localStorage.getItem("projectData");
       if (cachedData) {
         setData(JSON.parse(cachedData));
         setIsLoading(false);
       }
 
-      // Fetch fresh data
       const formData = new FormData();
       formData.append("op", "get_project_detail");
       formData.append("project_id", "137869");
@@ -58,7 +71,7 @@ export default function Index() {
       formData.append("company_id", "408");
 
       const response = await axios.post(
-        "https://api-cfdev.contractorforeman.net/service.php?opp=get_project_detail&c=408&u=50304&p=manage_projects",
+        "https:api-cfdev.contractorforeman.net/service.php?opp=get_project_detail&c=408&u=50304&p=manage_projects",
         formData
       );
 
@@ -66,7 +79,6 @@ export default function Index() {
       setData(newData);
       setIsLoading(false);
 
-      // Cache the new data
       localStorage.setItem("projectData", JSON.stringify(newData));
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -106,54 +118,113 @@ export default function Index() {
   const commonStyle = `bg-white border rounded-md hover:shadow-lg transition-shadow duration-500`;
 
   return (
-    <div className="space-y-4 p-4 overflow-y-auto sidebar">
-      <div className="w-full">
-        <Suspense fallback={<p>Loading Project topbar...</p>}>
-          <Top data={billing_vs_actual} />
-        </Suspense>
-      </div>
+    <Layout style={{ height: "100vh" }}>
+      {/* Ant Design Sidebar */}
+      <Sider trigger={null} collapsible collapsed={collapsed} width={224}>
+        <div className="demo-logo-vertical" />
+        <Button
+          type="text"
+          icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          onClick={() => setCollapsed(!collapsed)}
+          style={{
+            fontSize: "16px",
+            width: 64,
+            height: 64,
+          }}
+        />
+        <Menu
+          theme="dark"
+          mode="inline"
+          defaultSelectedKeys={["1"]}
+          items={[
+            {
+              key: "1",
+              icon: <UserOutlined />,
+              label: "Summary",
+            },
+            {
+              key: "2",
+              icon: <VideoCameraOutlined />,
+              label: "Details",
+            },
+            {
+              key: "3",
+              icon: <UploadOutlined />,
+              label: "Financial",
+            },
+          ]}
+        />
+      </Sider>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
-        <div className={`${commonStyle} p-4`}>
-          <Suspense fallback={<p>Loading Project Summary...</p>}>
-            <ProjectSummary data={project_summary} />
-          </Suspense>
-        </div>
-        <div className={`${commonStyle} px-4 pt-4`}>
-          <Suspense fallback={<p>Loading Summary Percentages...</p>}>
-            <SummaryPercentages data={data} />
-          </Suspense>
-        </div>
-        <div className={`${commonStyle} px-4 pt-4`}>
-          <Suspense fallback={<p>Loading Action Items...</p>}>
-            <ActionItems />
-          </Suspense>
-        </div>
-        <div>
-          <Suspense fallback={<p>Loading Invoiced...</p>}>
-            <Invoiced
-              data={data}
-              customer_additional_contacts={customer_additional_contacts}
-            />
-          </Suspense>
-        </div>
-        <div className={`${commonStyle} px-4 pb-2 lg:pt-4`}>
-          <Suspense fallback={<p>Loading Work In Progress...</p>}>
-            <WorkInprogress data={wip_widget} />
-          </Suspense>
-        </div>
-        <div className={`${commonStyle} p-4`}>
-          <Suspense fallback={<p>Loading Recent Photos...</p>}>
-            <RecentPhtotos data={data} />
-          </Suspense>
-        </div>
-      </div>
+      <Layout>
+        {/* Top Header */}
+        <Header
+          style={{
+            padding: 0,
+            background: colorBgContainer,
+            height: 100,
+            backgroundColor: "#001529",
+          }}
+        ></Header>
 
-      <div className={`${commonStyle} px-4 h-60`}>
-        <Suspense fallback={<p>Loading Scheduler...</p>}>
-          <Schedular />
-        </Suspense>
-      </div>
-    </div>
+        {/* Content Area */}
+        <Content
+          style={{
+            margin: "24px 16px ",
+            padding: 24,
+            minHeight: 280,
+            background: colorBgContainer,
+            borderRadius: borderRadiusLG,
+            overflowY: "auto",
+          }}
+        >
+          <Suspense fallback={<p>Loading Project topbar...</p>}>
+            <Top data={billing_vs_actual} />
+          </Suspense>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 mt-4">
+            <div className={`${commonStyle} p-4`}>
+              <Suspense fallback={<p>Loading Project Summary...</p>}>
+                <ProjectSummary data={project_summary} />
+              </Suspense>
+            </div>
+            <div className={`${commonStyle} px-4 pt-4`}>
+              <Suspense fallback={<p>Loading Summary Percentages...</p>}>
+                <SummaryPercentages data={data} />
+              </Suspense>
+            </div>
+            <div className={`${commonStyle} px-4 pt-4`}>
+              <Suspense fallback={<p>Loading Action Items...</p>}>
+                <ActionItems />
+              </Suspense>
+            </div>
+            <div>
+              <Suspense fallback={<p>Loading Invoiced...</p>}>
+                <Invoiced
+                  data={data}
+                  customer_additional_contacts={customer_additional_contacts}
+                />
+              </Suspense>
+            </div>
+            <div className={`${commonStyle} px-4 pb-2 lg:pt-4`}>
+              <Suspense fallback={<p>Loading Work In Progress...</p>}>
+                <WorkInprogress data={wip_widget} />
+              </Suspense>
+            </div>
+            <div className={`${commonStyle} p-4  `}>
+              <Suspense fallback={<p>Loading Recent Photos...</p>}>
+                <RecentPhtotos data={data} />
+              </Suspense>
+            </div>
+          </div>
+
+          <div className={`${commonStyle} px-4 pt-2 h-60 mt-4`}>
+            <Suspense fallback={<p>Loading Scheduler...</p>}>
+              <Schedular />
+            </Suspense>
+          </div>
+        </Content>
+      </Layout>
+    </Layout>
   );
 }

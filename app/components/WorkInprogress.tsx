@@ -1,8 +1,11 @@
-import { faFileLines } from "@fortawesome/pro-solid-svg-icons";
+import { faAddressCard, faFileLines } from "@fortawesome/pro-solid-svg-icons";
 import { formatCurrency } from "~/helpers";
 import CustomIcon from "./CustomIcon";
 import { useEffect, useState } from "react";
 import Skeleton from "./Skeletons/skeleton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo } from "@fortawesome/sharp-regular-svg-icons";
+import { Tooltip } from "antd";
 
 const WorkInprogress = ({ data }: any) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -12,8 +15,6 @@ const WorkInprogress = ({ data }: any) => {
       setIsLoading(false);
     }, 1000);
   }, []);
-
-  console.log("Work in progress", data);
 
   const {
     cost_completed,
@@ -30,15 +31,13 @@ const WorkInprogress = ({ data }: any) => {
     {
       id: 1,
       label: "Total Project Amount (no/Tax)",
-      value: `${formatCurrency(Number(original_contract_amount))}
-`,
+      value: `${formatCurrency(Number(original_contract_amount))}`,
       color: "text-emerald-600",
     },
     {
       id: 2,
       label: "Invoiced to Date (no/Tax)",
-      value: `${formatCurrency(Number(original_contract_amount))}
-`,
+      value: `${formatCurrency(Number(original_contract_amount))}`,
       color: "text-emerald-600",
     },
     {
@@ -79,7 +78,7 @@ const WorkInprogress = ({ data }: any) => {
     },
     {
       id: 9,
-      label: " Under Billings",
+      label: "Under Billings",
       value: `${formatCurrency(Number(under_billing))}`,
       color: "text-red-600",
     },
@@ -87,12 +86,19 @@ const WorkInprogress = ({ data }: any) => {
 
   return (
     <>
-      <CustomIcon
-        icon={faFileLines}
-        label="Work In Progress (WIP)"
-        bgColor="#F3EEFD"
-        color="#8C55E9"
-      />
+      <div className="flex gap-1.5">
+        <CustomIcon
+          icon={faFileLines}
+          label="Work In Progress (WIP)"
+          bgColor="#F3EEFD"
+          color="#8C55E9"
+        />
+        <Tooltip title="Read: Understanding Work in Progress" placement="top">
+          <span className="font-semibold flex justify-between items-center hover:text-[#FB8056] hover:cursor-pointer hover:transition-colors hover:duration-700">
+            <FontAwesomeIcon icon={faCircleInfo} className="text-base" />
+          </span>
+        </Tooltip>
+      </div>
 
       <div className="pt-2.5 flex flex-col gap-[1px] lg:gap-[1.7px]">
         {Items.map((i) => (
