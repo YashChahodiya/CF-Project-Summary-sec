@@ -27,23 +27,34 @@ interface ProjectData {
   billing_vs_actual: any;
 }
 
-export default function Index() {
+export type IndexProps = {
+  projectId: string;
+  userId: string;
+  compId: string;
+};
+
+export default function Index({ projectId, userId, compId }: IndexProps) {
   const [data, setData] = useState<ProjectData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  console.log("projectID", projectId);
+  console.log("userId", userId);
+  console.log("compId", compId);
+
   const fetchData = async () => {
     try {
-      // Check if we have cached data
-      const cachedData = localStorage.getItem("projectData");
-      if (cachedData) {
-        setData(JSON.parse(cachedData));
+      if (data) {
         setIsLoading(false);
       }
+      // const cachedData = localStorage.getItem("projectData");
+      // if (cachedData) {
+      //   setData(JSON.parse(cachedData));
+      //   setIsLoading(false);
+      // }
 
-      // Fetch fresh data
       const formData = new FormData();
       formData.append("op", "get_project_detail");
-      formData.append("project_id", "137869");
+      formData.append("project_id", projectId);
       formData.append("is_refresh", "0");
       formData.append("record_type", "project");
       formData.append("version", "web");
@@ -54,20 +65,21 @@ export default function Index() {
       formData.append("curr_time", new Date().toISOString());
       formData.append("force_login", "0");
       formData.append("global_project", "");
-      formData.append("user_id", "50304");
-      formData.append("company_id", "408");
+      formData.append("user_id", userId);
+      formData.append("company_id", compId);
 
       const response = await axios.post(
-        "https://api-cfdev.contractorforeman.net/service.php?opp=get_project_detail&c=408&u=50304&p=manage_projects",
+        `https://api-cfdev.contractorforeman.net/service.php?opp=get_project_detail&c=${Number(
+          compId
+        )}&u=${Number(userId)}&p=manage_projects`,
         formData
       );
 
-      const newData = response.data.data;
+      const newData = response?.data?.data;
       setData(newData);
       setIsLoading(false);
 
-      // Cache the new data
-      localStorage.setItem("projectData", JSON.stringify(newData));
+      // localStorage.setItem("projectData", JSON.stringify(newData));
     } catch (error) {
       console.error("Error fetching data:", error);
       setIsLoading(false);
@@ -126,7 +138,11 @@ export default function Index() {
         </div>
         <div className={`${commonStyle} px-4 pt-4`}>
           <Suspense fallback={<p>Loading Action Items...</p>}>
-            <ActionItems />
+            <ActionItems
+              projectId={projectId}
+              userId={userId}
+              compId={compId}
+            />
           </Suspense>
         </div>
         <div>
@@ -151,7 +167,7 @@ export default function Index() {
 
       <div className={`${commonStyle} px-4 h-60`}>
         <Suspense fallback={<p>Loading Scheduler...</p>}>
-          <Schedular />
+          <Schedular projectId={projectId} userId={userId} compId={compId} />
         </Suspense>
       </div>
     </div>

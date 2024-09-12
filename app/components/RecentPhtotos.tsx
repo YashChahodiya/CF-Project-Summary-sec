@@ -50,13 +50,13 @@ const RecentPhotos = ({ data }: any) => {
                       key={image_id}
                       href={file_path}
                       download={!is_image}
-                      className="light-gallery overflow-hidden rounded-md"
+                      className="light-gallery overflow-hidden w-16 md:w-20 h-16 md:h-20 col-span-1  rounded-md "
                       data-sub-html={`<h4>${file_name}</h4>`}
                     >
                       <img
                         src={file_path}
                         alt={file_name}
-                        className="w-20 h-20 object-cover rounded-md cursor-pointer hover:scale-110 transition-transform duration-500"
+                        className="  cursor-pointer hover:scale-110 transition-transform duration-500"
                       />
                     </a>
                   )

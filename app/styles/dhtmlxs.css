@@ -1,20 +1,20 @@
 .dhx_cal_header {
-  /* @apply bg-[rgba(34, 53, 88, 0.1)] left-0 w-full p-0 m-0 !important */
-  background-color: rgba(34, 53, 88, 0.1) !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
+  @apply bg-[#2235581a] p-0 m-0 left-0 w-full  !important;
 }
+
 .dhx_cal_data {
-  overflow-y: hidden !important;
+  @apply overflow-y-hidden !important;
+}
+
+.dhx_cal_date {
+  @apply text-sm md:text-base !important;
 }
 
 .dhx_scale_time {
-  overflow-y: hidden;
+  @apply overflow-y-hidden !important;
 }
 
 /* dhx_resize_denied dhx_move_denied */
 .dhx_cal_data {
-  display: none;
+  @apply hidden !important;
 }

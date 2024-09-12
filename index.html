@@ -7,7 +7,7 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <link rel="stylesheet" href="./public/build/root-TLRHJL25.css" />
+    <link rel="stylesheet" href="./public/build/root-TDT553NQ.css" />
     <link rel="stylesheet" href="./public/client.bundle.css" />
     <link rel="stylesheet" href="./public/project.worker.bundle.css" />
     <link rel="stylesheet" href="./app/styles/light-gallery.css" />
@@ -34,25 +34,22 @@
     />
     <link
       rel="stylesheet"
-      href="
-https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.52.0/apexcharts.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.52.0/apexcharts.min.css"
       integrity="sha512-w3pXofOHrtYzBYpJwC6TzPH6SxD6HLAbT/rffdkA759nCQvYi5AHy5trNWFboZnj4xtdyK0AFMBtck9eTmwybg=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
     <link
       rel="stylesheet"
-      href="
-      https://cdn.dhtmlx.com/scheduler/edge/dhtmlxscheduler.css?_gl=1*myqvza*_gcl_au*MTExOTE0OTg4Ny4xNzI0ODM1MTM1*_ga*NjUxMzA1NDg3LjE3MjQ4MzUxMzY.*_ga_N87XPB4GSG*MTcyNTk0NTkxMC4xMy4xLjE3MjU5NDU5NjIuOC4wLjA."
+      href="https://cdn.dhtmlx.com/scheduler/edge/dhtmlxscheduler.css?_gl=1*myqvza*_gcl_au*MTExOTE0OTg4Ny4xNzI0ODM1MTM1*_ga*NjUxMzA1NDg3LjE3MjQ4MzUxMzY.*_ga_N87XPB4GSG*MTcyNTk0NTkxMC4xMy4xLjE3MjU5NDU5NjIuOC4wLjA."
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
   </head>
   <body class="bg-[#ECEDED] text-[#293573] selection:bg-indigo-100">
+    <button id="refresh">Refresh</button>
     <div id="root1"></div>
 
-    <!--    // add the webviewer file to display the pdf and use the window object to
-    show that pdf express viewer -->
     <script src="https://unpkg.com/comlink/dist/umd/comlink.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script
@@ -66,17 +63,35 @@ https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.52.0/apexcharts.min.css"
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script type="module">
-      async function loadComponent(workerScript, rootId) {
-        const root = document.getElementById(rootId);
-        // root.innerHTML = "Loading...";
 
+    <script src="./index.js"></script>
+
+    <!-- <script type="module">
+      async function loadComponent(
+        workerScript,
+        rootId,
+        projectId,
+        compId,
+        userId
+      ) {
+        const root = document.getElementById(rootId);
         try {
           const worker = new Worker(workerScript, { type: "module" });
           const { renderComponent } = Comlink.wrap(worker);
-          const html = await renderComponent();
+          const html = await renderComponent({
+            projectId: projectId,
+            compId: compId,
+            userId: userId,
+          });
           root.innerHTML = html;
+
           worker.terminate();
+
+          // Set the values on the window object
+          window.projectId = projectId;
+          window.userId = userId;
+          window.compId = compId;
+
           await import("./public/client/client.js");
         } catch (error) {
           console.error(`Error loading component: ${error}`);
@@ -84,7 +99,26 @@ https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.52.0/apexcharts.min.css"
         }
       }
 
-      loadComponent("./public/project/project.worker.js", "root1");
-    </script>
+      function getUrlParameter(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+        var results = regex.exec(location.search);
+        return results === null
+          ? ""
+          : decodeURIComponent(results[1].replace(/\+/g, " "));
+      }
+
+      const projectId = getUrlParameter("projectId") || "137869";
+      const compId = getUrlParameter("compId") || "408";
+      const userId = getUrlParameter("userId") || "50304";
+
+      loadComponent(
+        "./public/project/project.worker.js",
+        "root1",
+        projectId,
+        compId,
+        userId
+      );
+    </script> -->
   </body>
 </html>

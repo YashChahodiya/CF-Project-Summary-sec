@@ -5,8 +5,9 @@ import { faBoxCircleCheck } from "@fortawesome/pro-solid-svg-icons";
 import axios from "axios";
 import CustomIcon from "./CustomIcon";
 import Skeleton from "./Skeletons/skeleton";
+import { IndexProps } from "~/routes/_index";
 
-const ActionItems = () => {
+const ActionItems = ({ projectId, userId, compId }: IndexProps) => {
   // const [ReactApexChart, setReactApexChart] = useState<any>();
 
   const [data, setData] = useState<any>([]);
@@ -16,7 +17,7 @@ const ActionItems = () => {
       try {
         const formData = new FormData();
         formData.append("op", "get_project_reference_detail");
-        formData.append("project_id", "147534");
+        formData.append("project_id", projectId);
         formData.append("need_more_data", "0");
         formData.append("for_module_key", "");
         formData.append("version", "web");
@@ -27,11 +28,13 @@ const ActionItems = () => {
         formData.append("curr_time", "2024-08-31 15:50:38");
         formData.append("force_login", "0");
         formData.append("global_project", "");
-        formData.append("user_id", "109871");
-        formData.append("company_id", "829");
+        formData.append("user_id", userId);
+        formData.append("company_id", compId);
 
         const response = await axios.post(
-          "https://api-cfdev.contractorforeman.net/service.php?opp=get_project_reference_detail&c=829&u=109871&p=manage_projects",
+          `https://api-cfdev.contractorforeman.net/service.php?opp=get_project_reference_detail&c=${Number(
+            compId
+          )}&u=${Number(userId)}&p=manage_projects`,
           formData
         );
 
