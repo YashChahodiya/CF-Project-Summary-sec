@@ -72,7 +72,7 @@ const Top = ({ data }: any) => {
   ];
 
   return (
-    <div className="  grid grid-cols-1 lg:grid-cols-5 w-full   gap-2 mt-3 ">
+    <div className="  grid grid-cols-1 lg:grid-cols-5 w-full  gap-2 mt-3 ">
       {Items.map(({ id, bgColor, icon, label, label2, values, color }) => (
         <div
           className="col-span-1 rounded-lg border bg-white  hover:shadow-lg hover:transition-shadow hover:duration-500 px-4 py-2.5 w-full"

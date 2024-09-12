@@ -13,7 +13,8 @@ import CustomIcon from "./CustomIcon";
 import { CFModal } from "./antdmodal";
 import axios from "axios";
 import { faExpand } from "@fortawesome/sharp-regular-svg-icons";
-import MapComponent from "./map";
+
+import MapComponent from "./Map";
 
 const Invoiced = ({ data, customer_additional_contacts }: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -182,7 +183,9 @@ const Invoiced = ({ data, customer_additional_contacts }: any) => {
                 </a>
                 <span className="text-[#FB8056] flex justify-center items-center space-x-1 font-semibold hover:cursor-pointer ">
                   <Tooltip title="Contact Details" placement="top">
-                    <span className="text-sm hover:bg-[#eed1c9] p-1 rounded-sm">
+                    <span
+                      className={`text-sm hover:bg-[#f3ddd7] p-1 px-2 rounded-sm ${CommonTransition}`}
+                    >
                       <FontAwesomeIcon
                         icon={faAddressCard}
                         onClick={handleModalOpen}
@@ -271,27 +274,7 @@ const Invoiced = ({ data, customer_additional_contacts }: any) => {
               ))}
           </div>
 
-          <div className="map-container relative">
-            <iframe
-              title="Google Maps"
-              src="https://maps.google.com/maps?q=Weller%20Drive,%20Thurmont,%20MD%2021788&t=&z=13&ie=UTF8&iwloc=&output=embed"
-              height="220"
-              loading="lazy"
-              className="w-full border-0 rounded-md"
-              style={{ minHeight: "220px", maxHeight: "400px" }}
-            />
-            <button
-              className="full-screen-btn absolute top-2 right-2 z-10 p-2 bg-white border "
-              onClick={() =>
-                window.open(
-                  "https://maps.google.com/maps?q=Weller%20Drive,%20Thurmont,%20MD%2021788&t=&z=13&ie=UTF8&iwloc=&output=embed",
-                  "_blank"
-                )
-              }
-            >
-              <FontAwesomeIcon icon={faExpand} className="text-base" />
-            </button>
-          </div>
+          <MapComponent />
         </div>
       </CFModal>
     </>

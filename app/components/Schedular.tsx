@@ -72,7 +72,7 @@ const SchedulerWidget = () => {
             scheduler.config.header = ["date", "prev", "next"];
             scheduler.xy.scale_width = 30;
           } else {
-            scheduler.config.header = ["date", "prev", "today", "next"];
+            scheduler.config.header = ["date", "today", "prev", "next"];
             scheduler.xy.scale_width = 50;
           }
           // Only update the view after initialization

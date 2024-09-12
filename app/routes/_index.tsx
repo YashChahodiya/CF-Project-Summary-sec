@@ -118,113 +118,54 @@ export default function Index() {
   const commonStyle = `bg-white border rounded-md hover:shadow-lg transition-shadow duration-500`;
 
   return (
-    <Layout style={{ height: "100vh" }}>
-      {/* Ant Design Sidebar */}
-      <Sider trigger={null} collapsible collapsed={collapsed} width={224}>
-        <div className="demo-logo-vertical" />
-        <Button
-          type="text"
-          icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-          onClick={() => setCollapsed(!collapsed)}
-          style={{
-            fontSize: "16px",
-            width: 64,
-            height: 64,
-          }}
-        />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          items={[
-            {
-              key: "1",
-              icon: <UserOutlined />,
-              label: "Summary",
-            },
-            {
-              key: "2",
-              icon: <VideoCameraOutlined />,
-              label: "Details",
-            },
-            {
-              key: "3",
-              icon: <UploadOutlined />,
-              label: "Financial",
-            },
-          ]}
-        />
-      </Sider>
+    <div className="p-2">
+      <Layout style={{ height: "100vh" }}>
+        <Suspense fallback={<p>Loading Project topbar...</p>}>
+          <Top data={billing_vs_actual} />
+        </Suspense>
 
-      <Layout>
-        {/* Top Header */}
-        <Header
-          style={{
-            padding: 0,
-            background: colorBgContainer,
-            height: 100,
-            backgroundColor: "#001529",
-          }}
-        ></Header>
-
-        {/* Content Area */}
-        <Content
-          style={{
-            margin: "24px 16px ",
-            padding: 24,
-            minHeight: 280,
-            background: colorBgContainer,
-            borderRadius: borderRadiusLG,
-            overflowY: "auto",
-          }}
-        >
-          <Suspense fallback={<p>Loading Project topbar...</p>}>
-            <Top data={billing_vs_actual} />
-          </Suspense>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 mt-4">
-            <div className={`${commonStyle} p-4`}>
-              <Suspense fallback={<p>Loading Project Summary...</p>}>
-                <ProjectSummary data={project_summary} />
-              </Suspense>
-            </div>
-            <div className={`${commonStyle} px-4 pt-4`}>
-              <Suspense fallback={<p>Loading Summary Percentages...</p>}>
-                <SummaryPercentages data={data} />
-              </Suspense>
-            </div>
-            <div className={`${commonStyle} px-4 pt-4`}>
-              <Suspense fallback={<p>Loading Action Items...</p>}>
-                <ActionItems />
-              </Suspense>
-            </div>
-            <div>
-              <Suspense fallback={<p>Loading Invoiced...</p>}>
-                <Invoiced
-                  data={data}
-                  customer_additional_contacts={customer_additional_contacts}
-                />
-              </Suspense>
-            </div>
-            <div className={`${commonStyle} px-4 pb-2 lg:pt-4`}>
-              <Suspense fallback={<p>Loading Work In Progress...</p>}>
-                <WorkInprogress data={wip_widget} />
-              </Suspense>
-            </div>
-            <div className={`${commonStyle} p-4  `}>
-              <Suspense fallback={<p>Loading Recent Photos...</p>}>
-                <RecentPhtotos data={data} />
-              </Suspense>
-            </div>
-          </div>
-
-          <div className={`${commonStyle} px-4 pt-2 h-60 mt-4`}>
-            <Suspense fallback={<p>Loading Scheduler...</p>}>
-              <Schedular />
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 mt-4">
+          <div className={`${commonStyle} p-4`}>
+            <Suspense fallback={<p>Loading Project Summary...</p>}>
+              <ProjectSummary data={project_summary} />
             </Suspense>
           </div>
-        </Content>
+          <div className={`${commonStyle} px-4 pt-4`}>
+            <Suspense fallback={<p>Loading Summary Percentages...</p>}>
+              <SummaryPercentages data={data} />
+            </Suspense>
+          </div>
+          <div className={`${commonStyle} px-4 pt-4`}>
+            <Suspense fallback={<p>Loading Action Items...</p>}>
+              <ActionItems />
+            </Suspense>
+          </div>
+          <div>
+            <Suspense fallback={<p>Loading Invoiced...</p>}>
+              <Invoiced
+                data={data}
+                customer_additional_contacts={customer_additional_contacts}
+              />
+            </Suspense>
+          </div>
+          <div className={`${commonStyle} px-4 pb-2 lg:pt-4`}>
+            <Suspense fallback={<p>Loading Work In Progress...</p>}>
+              <WorkInprogress data={wip_widget} />
+            </Suspense>
+          </div>
+          <div className={`${commonStyle} p-4  `}>
+            <Suspense fallback={<p>Loading Recent Photos...</p>}>
+              <RecentPhtotos data={data} />
+            </Suspense>
+          </div>
+        </div>
+
+        <div className={`${commonStyle} px-4 pt-2 h-60 mt-4`}>
+          <Suspense fallback={<p>Loading Scheduler...</p>}>
+            <Schedular />
+          </Suspense>
+        </div>
       </Layout>
-    </Layout>
+    </div>
   );
 }

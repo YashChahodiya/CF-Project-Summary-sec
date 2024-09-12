@@ -51,7 +51,7 @@ const SummaryPercentages = ({ data }: any) => {
       },
     },
     dataLabels: {
-      enabled: false, // Enable data labels
+      enabled: false,
       formatter: function (val: number) {
         return `${val.toFixed(2)}%`; // Format data labels as percentages
       },
