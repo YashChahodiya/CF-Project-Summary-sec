@@ -1,12 +1,13 @@
-function getSummery(proId) {
+function getSummery(proId, buildUrl, id) {
   async function loadComponent(
     workerScript,
     rootId,
     projectId,
     compId,
-    userId,
-    location
+    userId
   ) {
+    console.log("proId from html ======>>>>>>", proId);
+
     const root = document.getElementById(rootId);
     if (!root) {
       console.error("Root element not found.");
@@ -20,7 +21,6 @@ function getSummery(proId) {
         projectId,
         compId,
         userId,
-        location,
       });
       root.innerHTML = html;
 
@@ -29,7 +29,6 @@ function getSummery(proId) {
       window.projectId = projectId;
       window.userId = userId;
       window.compId = compId;
-      window.currLocation = location;
 
       // Ensure dynamic import is properly awaited
       await import("./public/client/client.js");
@@ -43,20 +42,12 @@ function getSummery(proId) {
   const projectId = proId;
   const compId = "408";
   const userId = "50304";
-  const location = window.location.href;
 
-  loadComponent(
-    "./public/project/project.worker.js",
-    "root1",
-    projectId,
-    compId,
-    userId,
-    location
-  );
+  loadComponent(buildUrl, id, projectId, compId, userId);
 }
 
 // Define `getSummery` before adding event listener
-getSummery();
+getSummery("137869", "./public/project/project.worker.js", "root1");
 
 let refreshTimeout;
 const refresh = document.getElementById("refresh");
@@ -65,62 +56,28 @@ const pro2 = document.getElementById("pro2");
 const pro3 = document.getElementById("pro3");
 const pro4 = document.getElementById("pro4");
 
-if (pro1) {
-  pro1.addEventListener("click", () => {
-    if (refreshTimeout) {
-      clearTimeout(refreshTimeout);
+function handleButtonClick(button, proId) {
+  if (refreshTimeout) {
+    clearTimeout(refreshTimeout);
+  }
+
+  refreshTimeout = setTimeout(() => {
+    const root = document.getElementById("root1");
+    if (root) {
+      root.remove();
     }
+    const roots = document.createElement("div");
+    document.body.appendChild(roots).id = "root1";
 
-    refreshTimeout = setTimeout(() => {
-      const proId = Number(pro1.innerHTML);
-      window.localStorage.setItem("project", proId);
-
-      window.location.href += `?projectId=${proId}`;
-
-      getSummery(proId);
-    }, 300); // Adjust the delay as needed
-  });
+    getSummery(proId, "./public/project/project.worker.js", "root1");
+  }, 1000);
 }
-if (pro2) {
-  pro2.addEventListener("click", () => {
-    if (refreshTimeout) {
-      clearTimeout(refreshTimeout);
-    }
 
-    refreshTimeout = setTimeout(() => {
-      const proId = Number(pro2.innerHTML);
-      window.localStorage.setItem("project", proId);
-      window.location.href += `?projectId=${proId}`;
-      getSummery(proId);
-    }, 300); // Adjust the delay as needed
-  });
-}
-if (pro3) {
-  pro3.addEventListener("click", () => {
-    if (refreshTimeout) {
-      clearTimeout(refreshTimeout);
-    }
-
-    refreshTimeout = setTimeout(() => {
-      const proId = Number(pro3.innerHTML);
-      window.localStorage.setItem("project", proId);
-      window.location.href += `?projectId=${proId}`;
-      getSummery(proId);
-    }, 300); // Adjust the delay as needed
-  });
-}
-if (pro4) {
-  pro4.addEventListener("click", () => {
-    if (refreshTimeout) {
-      clearTimeout(refreshTimeout);
-    }
-
-    refreshTimeout = setTimeout(() => {
-      const proId = Number(pro4.innerHTML);
-      window.localStorage.setItem("project", proId);
-      // window.location.href = `http://127.0.0.1:5501/index.html?projectId=${proId}`;
-
-      getSummery(proId);
-    }, 300); // Adjust the delay as needed
-  });
-}
+if (pro1)
+  pro1.addEventListener("click", () => handleButtonClick(pro1, pro1.innerHTML));
+if (pro2)
+  pro2.addEventListener("click", () => handleButtonClick(pro2, pro2.innerHTML));
+if (pro3)
+  pro3.addEventListener("click", () => handleButtonClick(pro3, pro3.innerHTML));
+if (pro4)
+  pro4.addEventListener("click", () => handleButtonClick(pro4, pro4.innerHTML));

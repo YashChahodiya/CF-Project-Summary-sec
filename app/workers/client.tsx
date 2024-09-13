@@ -7,30 +7,23 @@ const hydrateComponent = (
   containerId: string,
   projectId: string,
   userId: string,
-  compId: string,
-  location: string
+  compId: string
 ) => {
   const container = document.getElementById(containerId);
   if (container) {
     hydrateRoot(
       container,
-      <Component
-        projectId={projectId}
-        userId={userId}
-        compId={compId}
-        location={location}
-      />
+      <Component projectId={projectId} userId={userId} compId={compId} />
     );
   }
 };
 
 // Get the IDs and initial data from the window object
-const projectId = JSON.parse(localStorage.getItem("project")) ?? "0";
+const projectId = (window as any).projectId;
 const userId = (window as any).userId;
 const compId = (window as any).compId;
-const location = (window as any).currLocation;
 
 // set current projectID
 localStorage.setItem("currProject", projectId);
 
-hydrateComponent(Index, "root1", projectId, userId, compId, location);
+hydrateComponent(Index, "root1", projectId, userId, compId);
