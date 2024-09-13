@@ -12,7 +12,6 @@ import CustomIcon from "./CustomIcon";
 const Invoiced = ({ data, customer_additional_contacts }: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  console.log("invoiced", customer_additional_contacts);
   const {
     amount_invoiced,
     original_contract_amount,
@@ -22,7 +21,7 @@ const Invoiced = ({ data, customer_additional_contacts }: any) => {
   } = data?.billing_vs_actual;
 
   const invoicedPercentage = (
-    (parseFloat(amount_invoiced) / parseFloat(original_contract_amount)) *
+    (parseFloat(amount_invoiced!) / parseFloat(original_contract_amount!)) *
     100
   ).toFixed(0);
   const remainingPercentage = (

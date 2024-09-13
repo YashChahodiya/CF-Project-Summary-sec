@@ -12,6 +12,7 @@ const SchedulerWidget = ({ projectId, userId, compId }: IndexProps) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log("Data fetching from Scheduler =====>>>>>.........");
       try {
         const formData = new FormData();
         formData.append("op", "get_schedule_calendar_events");
@@ -35,7 +36,10 @@ const SchedulerWidget = ({ projectId, userId, compId }: IndexProps) => {
           }&u=${userId ? Number(userId) : 0}&p=manage_projects`,
           formData
         );
-
+        console.log(
+          "Data fetching Successfull from Scheduler  =====>>>>>",
+          response?.data
+        );
         // Return the data fetched from the API
         setData(response?.data?.data?.modules);
       } catch (error) {

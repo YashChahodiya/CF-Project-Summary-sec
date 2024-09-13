@@ -8,7 +8,7 @@ const hydrateComponent = (
   projectId: string,
   userId: string,
   compId: string,
-  initialData: any
+  location: string
 ) => {
   const container = document.getElementById(containerId);
   if (container) {
@@ -18,16 +18,19 @@ const hydrateComponent = (
         projectId={projectId}
         userId={userId}
         compId={compId}
-        initialData={initialData}
+        location={location}
       />
     );
   }
 };
 
 // Get the IDs and initial data from the window object
-const projectId = (window as any).projectId;
+const projectId = JSON.parse(localStorage.getItem("project")) ?? "0";
 const userId = (window as any).userId;
 const compId = (window as any).compId;
-const initialData = (window as any).initialData;
+const location = (window as any).currLocation;
 
-hydrateComponent(Index, "root1", projectId, userId, compId, initialData);
+// set current projectID
+localStorage.setItem("currProject", projectId);
+
+hydrateComponent(Index, "root1", projectId, userId, compId, location);

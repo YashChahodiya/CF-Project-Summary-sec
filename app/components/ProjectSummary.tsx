@@ -124,7 +124,7 @@ const ProjectSummary = ({ data }: any) => {
           <p className="flex justify-between items-center text-sm">
             Change Orders (w/Tax)
             <span className="text-emerald-600 font-semibold">
-              {formatCurrency(Number(change_orders))}
+              {formatCurrency(Number(change_orders!))}
             </span>
           </p>
           <div className="w-8 h-8 rounded-full bg-white shadow-lg shadow-black/20 absolute -bottom-3 right-1/2  flex justify-center items-center">

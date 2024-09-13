@@ -13,8 +13,6 @@ const WorkInprogress = ({ data }: any) => {
     }, 1000);
   }, []);
 
-  console.log("Work in progress", data);
-
   const {
     cost_completed,
     current_cost_budget,
@@ -56,7 +54,7 @@ const WorkInprogress = ({ data }: any) => {
     {
       id: 5,
       label: "Cost % Complete",
-      value: `${Number(cost_completed).toFixed(2)}%`,
+      value: `${Number(cost_completed!).toFixed(2)}%`,
       color: "",
     },
     {

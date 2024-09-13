@@ -7,11 +7,10 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <link rel="stylesheet" href="./public/build/root-2AU6QBNE.css" />
+    <link rel="stylesheet" href="./public/build/root-FNAESDRE.css" />
     <link rel="stylesheet" href="./public/client/client.css" />
     <link rel="stylesheet" href="./public/client/Schedular-HDLVM2I5.css" />
     <link rel="stylesheet" href="./public/project/project.worker.css" />
-    <!-- <link rel="stylesheet" href="./public/client/Schedular-HDLVM2I5.css" /> -->
     <link rel="stylesheet" href="./public/project.worker.bundle.css" />
     <link rel="stylesheet" href="./app/styles/light-gallery.css" />
     <link
@@ -44,84 +43,22 @@
     />
     <link
       rel="stylesheet"
-      href="https://cdn.dhtmlx.com/scheduler/edge/dhtmlxscheduler.css?_gl=1*myqvza*_gcl_au*MTExOTE0OTg4Ny4xNzI0ODM1MTM1*_ga*NjUxMzA1NDg3LjE3MjQ4MzUxMzY.*_ga_N87XPB4GSG*MTcyNTk0NTkxMC4xMy4xLjE3MjU5NDU5NjIuOC4wLjA."
+      href="https://cdn.dhtmlx.com/scheduler/edge/dhtmlxscheduler.css"
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
   </head>
   <body class="bg-[#ECEDED] text-[#293573] selection:bg-indigo-100">
     <button id="refresh">Refresh</button>
+    <button id="pro1">137238</button> | <button id="pro2">138634</button> |
+    <button id="pro3">147428</button> |
+    <button id="pro4">137389</button>
     <div id="root1"></div>
 
     <script src="https://unpkg.com/comlink/dist/umd/comlink.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.52.0/apexcharts.min.js"
-      integrity="sha512-piY4QAXPoG2xLdUZZbcc5klXzMxckrQKY9A2o6nKDRt9inolvvLbvGPC+z9IZ29b28UJlD05B7CjxxPaxh4bjQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script
-      src="https://cdn.dhtmlx.com/scheduler/edge/dhtmlxscheduler.js?_gl=1*1eeywpj*_gcl_au*MTExOTE0OTg4Ny4xNzI0ODM1MTM1*_ga*NjUxMzA1NDg3LjE3MjQ4MzUxMzY.*_ga_N87XPB4GSG*MTcyNTk0NTkxMC4xMy4xLjE3MjU5NDU5MjkuNDEuMC4w"
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.52.0/apexcharts.min.js"></script>
+    <script src="https://cdn.dhtmlx.com/scheduler/edge/dhtmlxscheduler.js"></script>
     <script src="./index.js"></script>
-
-    <!-- <script type="module">
-      async function loadComponent(
-        workerScript,
-        rootId,
-        projectId,
-        compId,
-        userId
-      ) {
-        const root = document.getElementById(rootId);
-        try {
-          const worker = new Worker(workerScript, { type: "module" });
-          const { renderComponent } = Comlink.wrap(worker);
-          const html = await renderComponent({
-            projectId: projectId,
-            compId: compId,
-            userId: userId,
-          });
-          root.innerHTML = html;
-
-          worker.terminate();
-
-          // Set the values on the window object
-          window.projectId = projectId;
-          window.userId = userId;
-          window.compId = compId;
-
-          await import("./public/client/client.js");
-        } catch (error) {
-          console.error(`Error loading component: ${error}`);
-          root.innerHTML = "Error loading component";
-        }
-      }
-
-      function getUrlParameter(name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-        var results = regex.exec(location.search);
-        return results === null
-          ? ""
-          : decodeURIComponent(results[1].replace(/\+/g, " "));
-      }
-
-      const projectId = getUrlParameter("projectId") || "137869";
-      const compId = getUrlParameter("compId") || "408";
-      const userId = getUrlParameter("userId") || "50304";
-
-      loadComponent(
-        "./public/project/project.worker.js",
-        "root1",
-        projectId,
-        compId,
-        userId
-      );
-    </script> -->
   </body>
 </html>

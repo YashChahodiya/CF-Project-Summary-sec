@@ -17,8 +17,6 @@ const CustomIcon = ({
   iconClassName,
   label,
 }: CustomIconProps) => {
-  console.log("bgColor", bgColor);
-  console.log("Color", color);
   return (
     <div className="flex gap-2 items-center">
       <div
