@@ -2,28 +2,34 @@ import React from "react";
 import { hydrateRoot } from "react-dom/client";
 import Index from "../routes/_index";
 
-const hydrateComponent = (
+function hydrateComponent(
   Component: React.ComponentType<any>,
   containerId: string,
   projectId: string,
   userId: string,
   compId: string
-) => {
+) {
   const container = document.getElementById(containerId);
   if (container) {
-    hydrateRoot(
+    const root = hydrateRoot(
       container,
       <Component projectId={projectId} userId={userId} compId={compId} />
     );
+
+    (window as any).updateComponent = (
+      newProId: string,
+      newCompId: string,
+      newUserId: string
+    ) => {
+      root.render(
+        <Component projectId={newProId} userId={newUserId} compId={newCompId} />
+      );
+    };
   }
-};
+}
 
-// Get the IDs and initial data from the window object
-const projectId = (window as any).projectId;
-const userId = (window as any).userId;
-const compId = (window as any).compId;
+// Export both the function and the component
+export { hydrateComponent, Index };
 
-// set current projectID
-localStorage.setItem("currProject", projectId);
-
-hydrateComponent(Index, "root1", projectId, userId, compId);
+// Also export hydrateComponent as default for compatibility
+export default hydrateComponent;

@@ -6,7 +6,7 @@ import axios from "axios";
 import CustomIcon from "./CustomIcon";
 import { IndexProps } from "~/routes/_index";
 
-const SchedulerWidget = ({ projectId, userId, compId }: IndexProps) => {
+const Scheduler = ({ projectId, userId, compId }: IndexProps) => {
   const [data, setData] = useState<any>([]);
   const schedulerContainer = useRef<HTMLDivElement>(null);
 
@@ -76,7 +76,10 @@ const SchedulerWidget = ({ projectId, userId, compId }: IndexProps) => {
 
         // Function to reset the scheduler configuration
         const resetConfig = () => {
-          if (window.innerWidth < 768) {
+          if (
+            typeof window !== "undefined" &&
+            (window as any).innerWidth < 768
+          ) {
             scheduler.config.header = ["prev", "date", "next"];
             scheduler.xy.scale_width = 40;
             scheduler.templates.week_scale_date = function (date: Date) {
@@ -171,4 +174,4 @@ const SchedulerWidget = ({ projectId, userId, compId }: IndexProps) => {
   );
 };
 
-export default SchedulerWidget;
+export default Scheduler;

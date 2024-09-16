@@ -57,13 +57,6 @@ export default function Index({ projectId, userId, compId }: IndexProps) {
 
   // const projectId = JSON.parse(localStorage.getItem("project"));
 
-  console.log(
-    "currentProjectID =======>>>>>>>>",
-    JSON.parse(
-      typeof window !== "undefined" &&
-        (window as any).localStorage.getItem("currProject")
-    ) !== currentProjectId
-  );
   console.log("projectID =======>>>>>>>>", currentProjectId);
   console.log("userId =======>>>>>>>>", currentUserId);
   console.log("COMPiD =======>>>>>>>>", currentCompanyId);
@@ -94,12 +87,15 @@ export default function Index({ projectId, userId, compId }: IndexProps) {
       formData.append("company_id", currentCompanyId);
 
       const response = await axios.post(
-        `https://api-cfdev.contractorforeman.net/service.php?opp=get_project_detail&c=${currentCompanyId}&u=${currentUserId}&p=manage_projects`,
+        `https://api-cfdev.contractorforeman.net/service.php?opp=get_project_detail&c=${
+          Number(currentCompanyId) ?? 0
+        }&u=${Number(currentUserId) ?? 0}&p=manage_projects`,
         formData
       );
 
       console.log("Data fetched successfully", response?.data);
       const newData = response?.data?.data;
+
       setData(newData);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -107,23 +103,28 @@ export default function Index({ projectId, userId, compId }: IndexProps) {
     } finally {
       setIsLoading(false);
     }
-  }, [currentProjectId, currentUserId, currentCompanyId]);
+  }, [
+    currentProjectId,
+    currentCompanyId,
+    currentUserId,
+    projectId,
+    userId,
+    compId,
+  ]);
 
   useEffect(() => {
-    const localProjectId = JSON.parse(
-      typeof window !== "undefined" &&
-        (window as any).localStorage.getItem("currProject")
-    );
+    fetchData();
 
     // Check if there's a change in the project or user details
     const hasPropChanged =
       !data ||
-      localProjectId !== currentProjectId ||
       projectId !== currentProjectId ||
       userId !== currentUserId ||
       compId !== currentCompanyId;
 
-    if (!data || hasPropChanged || currentProjectId) {
+    console.log(hasPropChanged);
+
+    if (!data) {
       console.log("Props changed, fetching new data");
 
       // Call fetch data
@@ -136,7 +137,7 @@ export default function Index({ projectId, userId, compId }: IndexProps) {
     } else {
       console.log("No prop changes, skipping data fetch");
     }
-  }, [currentProjectId, userId, compId]);
+  }, [projectId, userId, compId]);
 
   if (isLoading) {
     return (
@@ -180,14 +181,6 @@ export default function Index({ projectId, userId, compId }: IndexProps) {
   return (
     <>
       <div className="space-y-4 p-4 overflow-y-auto sidebar" key={projectId}>
-        <div className="space-x-4">
-          {["137238", "138634", "147428", "137389"].map((i) => (
-            <button className="" key={i} onClick={() => setCurrentProjectId(i)}>
-              {i}
-            </button>
-          ))}
-        </div>
-
         <div className="w-full">
           <Suspense fallback={<p>Loading Project topbar...</p>}>
             <Top data={billing_vs_actual} />
@@ -216,7 +209,6 @@ export default function Index({ projectId, userId, compId }: IndexProps) {
               />
             </Suspense>
           </div>
-
           <div>
             <Suspense fallback={<p>Loading Invoiced...</p>}>
               <Invoiced
