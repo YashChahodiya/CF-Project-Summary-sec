@@ -47,14 +47,14 @@ const Scheduler = ({ projectId, userId, compId }: IndexProps) => {
       }
     };
 
-    const timeOut = setTimeout(() => {
-      fetchData();
-    }, 500);
+    // const timeOut = setTimeout(() => {
+    fetchData();
+    // }, 500);
 
-    return () => {
-      clearTimeout(timeOut);
-    };
-  }, []);
+    // return () => {
+    //   clearTimeout(timeOut);
+    // };
+  }, [projectId, userId, compId]);
 
   useEffect(() => {
     const loadScheduler = async () => {

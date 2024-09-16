@@ -9,7 +9,11 @@ interface ProjectData {
   billing_vs_actual: any;
 }
 
-export function useFetchTodo({ projectId, userId, compId }: IndexProps) {
+export function useFetchProjectDetails(
+  projectId: string,
+  userId: string,
+  compId: string
+) {
   const [data, setData] = useState<ProjectData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -24,7 +28,7 @@ export function useFetchTodo({ projectId, userId, compId }: IndexProps) {
 
         const formData = new FormData();
         formData.append("op", "get_project_detail");
-        formData.append("project_id", currentProjectId.toString());
+        formData.append("project_id", projectId.toString());
         formData.append("is_refresh", "0");
         formData.append("record_type", "project");
         formData.append("version", "web");
@@ -35,30 +39,31 @@ export function useFetchTodo({ projectId, userId, compId }: IndexProps) {
         formData.append("curr_time", new Date().toISOString());
         formData.append("force_login", "0");
         formData.append("global_project", "");
-        formData.append("user_id", currentUserId);
-        formData.append("company_id", currentCompanyId);
+        formData.append("user_id", userId.toString());
+        formData.append("company_id", compId.toString());
 
         const response = await axios.post(
           `https://api-cfdev.contractorforeman.net/service.php?opp=get_project_detail&c=${
-            Number(currentCompanyId) ?? 0
-          }&u=${Number(currentUserId) ?? 0}&p=manage_projects`,
+            Number(compId) ?? 0
+          }&u=${Number(userId) ?? 0}&p=manage_projects`,
           formData
         );
 
         console.log("Data fetched successfully", response?.data);
         const newData = response?.data?.data;
-
         setData(newData);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
         setError("Failed to load data. Please try again.");
+        setIsLoading(false);
       } finally {
         setIsLoading(false);
       }
     }
 
     fetchData();
-  }, [todoId]);
+  }, [projectId, userId, compId]);
 
   return { data, isLoading, error };
 }

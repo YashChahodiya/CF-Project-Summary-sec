@@ -10,8 +10,8 @@ const RecentPhotos = ({ data }: any) => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
-  }, []);
+    }, 300);
+  }, [data]);
 
   return (
     <div className="h-full">
