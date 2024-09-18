@@ -55,7 +55,7 @@ const WorkInprogress = ({ data }: any) => {
     {
       id: 5,
       label: "Cost % Complete",
-      value: `${Number(cost_completed).toFixed(2)}%`,
+      value: `${Number(cost_completed!).toFixed(2)}%`,
       color: "",
     },
     {

@@ -4,17 +4,19 @@ import "../styles/dhtmlxs.css";
 import { faCalendarDay } from "@fortawesome/pro-solid-svg-icons";
 import axios from "axios";
 import CustomIcon from "./CustomIcon";
+import { IndexProps } from "~/routes/_index";
 
-const SchedulerWidget = () => {
+const Scheduler = ({ projectId, userId, compId }: IndexProps) => {
   const [data, setData] = useState<any>([]);
   const schedulerContainer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log("Data fetching from Scheduler =====>>>>>.........");
       try {
         const formData = new FormData();
         formData.append("op", "get_schedule_calendar_events");
-        formData.append("project_id", "147534");
+        formData.append("project_id", projectId.toString() ?? "0");
         formData.append("for", "dashboard_summary");
         formData.append("start_date_range", "2024-9-01 00:00:00");
         formData.append("version", "web");
@@ -25,14 +27,19 @@ const SchedulerWidget = () => {
         formData.append("curr_time", "2024-08-31 15:50:38");
         formData.append("force_login", "0");
         formData.append("global_project", "");
-        formData.append("user_id", "109871");
-        formData.append("company_id", "829");
+        formData.append("user_id", userId.toString() ?? "0");
+        formData.append("company_id", compId.toString() ?? "0");
 
         const response = await axios.post(
-          "https://api-cfdev.contractorforeman.net/service.php?opp=get_schedule_calendar_events&c=829&u=109871&p=manage_projects",
+          `https://api-cfdev.contractorforeman.net/service.php?opp=get_schedule_calendar_events&c=${
+            compId ? Number(compId) : 0
+          }&u=${userId ? Number(userId) : 0}&p=manage_projects`,
           formData
         );
-
+        console.log(
+          "Data fetching Successfull from Scheduler  =====>>>>>",
+          response?.data
+        );
         // Return the data fetched from the API
         setData(response?.data?.data?.modules);
       } catch (error) {
@@ -40,14 +47,14 @@ const SchedulerWidget = () => {
       }
     };
 
-    const timeOut = setTimeout(() => {
-      fetchData();
-    }, 500);
+    // const timeOut = setTimeout(() => {
+    fetchData();
+    // }, 500);
 
-    return () => {
-      clearTimeout(timeOut);
-    };
-  }, []);
+    // return () => {
+    //   clearTimeout(timeOut);
+    // };
+  }, [projectId, userId, compId]);
 
   useEffect(() => {
     const loadScheduler = async () => {
@@ -63,17 +70,26 @@ const SchedulerWidget = () => {
         scheduler.config.drag_resize = false;
         scheduler.config.drag_move = false;
         scheduler.xy.scale_width = 0;
-        scheduler.config.responsive = true;
+        // scheduler.config.responsive = true;
         scheduler.config.left_border = false;
 
         // Function to reset the scheduler configuration
         const resetConfig = () => {
-          if (window.innerWidth < 768) {
-            scheduler.config.header = ["date", "prev", "next"];
-            scheduler.xy.scale_width = 30;
+          if (
+            typeof window !== "undefined" &&
+            (window as any).innerWidth < 768
+          ) {
+            scheduler.config.header = ["prev", "date", "next"];
+            scheduler.xy.scale_width = 40;
+            scheduler.templates.week_scale_date = function (date: Date) {
+              return scheduler.date.date_to_str("%D")(date);
+            };
           } else {
             scheduler.config.header = ["date", "today", "prev", "next"];
             scheduler.xy.scale_width = 50;
+            scheduler.templates.week_scale_date = function (date: Date) {
+              return scheduler.date.date_to_str("%D, %F %j")(date);
+            };
           }
           // Only update the view after initialization
           if (schedulerContainer.current) {
@@ -102,9 +118,9 @@ const SchedulerWidget = () => {
           return event.classname || "";
         };
 
-        scheduler.templates.week_scale_date = function (date: Date) {
-          return scheduler.date.date_to_str("%D, %F %j")(date);
-        };
+        // scheduler.templates.week_scale_date = function (date: Date) {
+        //   return scheduler.date.date_to_str("%D, %F %j")(date);
+        // };
 
         scheduler.ignore_week = function (date: Date) {
           if (date.getDay() === 0 || date.getDay() === 6) return true;
@@ -157,4 +173,4 @@ const SchedulerWidget = () => {
   );
 };
 
-export default SchedulerWidget;
+export default Scheduler;

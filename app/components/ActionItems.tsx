@@ -1,27 +1,29 @@
-import Chart from "react-apexcharts";
+import React, { useEffect, useState, Suspense, lazy } from "react";
 import { ApexOptions } from "apexcharts";
-import React, { useEffect, useState } from "react";
-import CustomIcon from "./CustomIcon";
-
 import { faBoxCircleCheck } from "@fortawesome/pro-solid-svg-icons";
 import axios from "axios";
+import CustomIcon from "./CustomIcon";
+import { IndexProps } from "~/routes/_index";
 
-import Skeleton from "./Skeletons/skeleton";
-import ReactApexChart from "react-apexcharts";
+const ReactApexChart = require("react-apexcharts").default;
 
-const ActionItems = () => {
-  const [ReactApexChart, setReactApexChart] = useState<any>();
-
+const ActionItems = ({ projectId, userId, compId }: IndexProps) => {
   const [data, setData] = useState<any>([]);
+  // const [ReactApexChart, setReactApexChart] = useState<any>();
+  // useEffect(() => {
+  //   import("react-apexcharts").then((d) => setReactApexChart(() => d.default));
+  // }, []);
 
   console.log(data, "1232");
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log("Data fetching from Action Items =====>>>>>.........");
+
       try {
         const formData = new FormData();
         formData.append("op", "get_project_reference_detail");
-        formData.append("project_id", "147534");
+        formData.append("project_id", projectId.toString() ?? "0");
         formData.append("need_more_data", "0");
         formData.append("for_module_key", "");
         formData.append("version", "web");
@@ -29,39 +31,33 @@ const ActionItems = () => {
         formData.append("iframe_call", "0");
         formData.append("tz", "+5:30");
         formData.append("tzid", "Asia/Calcutta");
-        formData.append("curr_time", "2024-08-31 15:50:38");
+        formData.append("curr_time", new Date().toISOString());
         formData.append("force_login", "0");
         formData.append("global_project", "");
-        formData.append("user_id", "109871");
-        formData.append("company_id", "829");
+        formData.append("user_id", userId.toString() ?? "0");
+        formData.append("company_id", compId.toString() ?? "0");
 
         const response = await axios.post(
-          "https://api-cfdev.contractorforeman.net/service.php?opp=get_project_reference_detail&c=829&u=109871&p=manage_projects",
+          `https://api-cfdev.contractorforeman.net/service.php?opp=get_project_reference_detail&c=${
+            compId ? Number(compId) : 0
+          }&u=${userId ? Number(userId) : 0}&p=manage_projects`,
           formData
         );
 
-        setData(response?.data?.data?.modules);
+        console.log(
+          "Data fetching Successfull from Action Items  =====>>>>>",
+          response?.data
+        );
+        setData(response?.data?.data?.modules || []);
       } catch (error) {
-        console.log("Error fetching data:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
-    const timeOut = setTimeout(() => {
+    if (projectId) {
       fetchData();
-    }, 500);
-
-    return () => {
-      clearTimeout(timeOut);
-    };
-  }, []);
-
-  // FOR REMIX
-  useEffect(() => {
-    import("react-apexcharts").then((d) => setReactApexChart(() => d.default));
-  }, []);
-
-  // HTML
-  // const ReactApexChart = require("react-apexcharts").default;
+    }
+  }, [projectId, userId, compId]);
 
   const options: ApexOptions = {
     chart: {
@@ -72,7 +68,6 @@ const ActionItems = () => {
         show: false,
       },
     },
-
     plotOptions: {
       bar: {
         horizontal: true,
@@ -100,7 +95,6 @@ const ActionItems = () => {
     },
   };
 
-  // invoices
   const invoices = data?.open_incomplete_item?.opnIncoInvoice[0] || {};
   const bills = data?.open_incomplete_item?.opnIncoBills[0] || {};
   const pos = data?.open_incomplete_item?.opnIncoPurchaseOrder[0] || {};
@@ -114,7 +108,7 @@ const ActionItems = () => {
 
   const series = [
     {
-      name: "Invocies",
+      name: "Invoices",
       data: [
         Number(invoices?.total_open) || 0,
         Number(invoices?.total_due) || 0,
@@ -129,38 +123,41 @@ const ActionItems = () => {
         Number(bills?.total_close) || 0,
       ],
     },
+    {
+      name: "Purchase Orders",
+      data: [
+        Number(pos?.total_open) || 0,
+        Number(pos?.bill_count) || 0,
+        Number(pos?.total_close) || 0,
+      ],
+    },
   ];
+
+  if (data?.length <= 0) {
+    console.log("<<<<<==== Data not Available ====>>>>>");
+    return <div>Loading Charts</div>;
+  }
 
   return (
     <div className="h-full">
       <CustomIcon
         icon={faBoxCircleCheck}
-        label="Action-Items"
-        bgColor="#ECF3FE"
-        color="#7FB2FF"
+        label="Action Items"
+        bgColor="#F0E5FF"
+        color="#684CC7"
+        className="text-base"
       />
-
       {!ReactApexChart ? (
-        <div className="space-y-4">
-          {[...Array(4)].map((_, index) => (
-            <div key={index} className="flex items-center space-x-2">
-              <Skeleton className="w-8 h-4" />
-              <Skeleton
-                className={`h-14 ${
-                  index === 1 ? "w-3/4" : index === 2 ? "w-full" : "w-1/2"
-                }`}
-              />
-            </div>
-          ))}
-        </div>
+        <>Loading...</>
       ) : (
-        <ReactApexChart
-          type="bar"
-          responsive
-          options={options}
-          series={series}
-          height={307}
-        />
+        <Suspense fallback={<div>Loading Chart...</div>}>
+          <ReactApexChart
+            type="bar"
+            height={307}
+            options={options}
+            series={series}
+          />
+        </Suspense>
       )}
     </div>
   );

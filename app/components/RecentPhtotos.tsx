@@ -10,8 +10,8 @@ const RecentPhotos = ({ data }: any) => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
-  }, []);
+    }, 300);
+  }, [data]);
 
   return (
     <div className="h-full">
@@ -45,18 +45,21 @@ const RecentPhotos = ({ data }: any) => {
             <div className="grid grid-cols-5 gap-4 w-full mt-4">
               {data?.aws_files?.length > 0 ? (
                 data?.aws_files.map(
-                  ({ image_id, file_path, is_image, file_name }: any) => (
+                  (
+                    { image_id, file_path, is_image, file_name }: any,
+                    i: number
+                  ) => (
                     <a
-                      key={image_id}
+                      key={image_id ?? i}
                       href={file_path}
                       download={!is_image}
-                      className="light-gallery overflow-hidden rounded-md"
+                      className="light-gallery overflow-hidden w-16 md:w-20 h-16 md:h-20 col-span-1  rounded-md "
                       data-sub-html={`<h4>${file_name}</h4>`}
                     >
                       <img
                         src={file_path}
                         alt={file_name}
-                        className="w-20 h-20 object-cover rounded-md cursor-pointer hover:scale-110 transition-transform duration-500"
+                        className="cursor-pointer"
                       />
                     </a>
                   )

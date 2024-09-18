@@ -9,8 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { formatCurrency } from "~/helpers";
 
 const Top = ({ data }: any) => {
-  console.log("121223", data);
-
   const Items = [
     {
       id: 1,
@@ -29,7 +27,7 @@ const Top = ({ data }: any) => {
       id: 2,
       label: "Site Manager",
       label2: `${
-        data.site_manager_name !== "" ? "-" : data?.site_manager_name
+        data?.site_manager_name === "" ? "-" : data?.site_manager_name
       }`,
       values: ``,
       icon: faUserVneck,

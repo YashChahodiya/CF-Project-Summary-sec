@@ -1,15 +1,145 @@
-import React, { useEffect, useState } from "react";
+// import React, { Suspense } from "react";
+// import { ApexOptions } from "apexcharts";
+// import { faSackDollar } from "@fortawesome/pro-solid-svg-icons";
+// import CustomIcon from "./CustomIcon";
+
+// const ReactApexChart = require("react-apexcharts").default;
+
+// const SummaryPercentages = ({ data }: any) => {
+//   const billing_vs_actual = data?.billing_vs_actual || {};
+//   const all_item_total = data?.all_item_total || {};
+
+//   // Function to format currency
+//   const formatCurrency = (value: any) => {
+//     return new Intl.NumberFormat("en-US", {
+//       style: "currency",
+//       currency: "USD",
+//       minimumFractionDigits: 2,
+//       maximumFractionDigits: 2,
+//     }).format(value);
+//   };
+
+//   // Sanitize and validate data before using in chart
+//   const commitedTotal = Number(all_item_total?.total?.commited_total) || 0;
+//   const actualTotal = Number(all_item_total?.total?.actual_total) || 0;
+//   const laborActualTotal = Number(all_item_total?.labor?.actual_total) || 0;
+//   const amountInvoiced =
+//     (Number(billing_vs_actual?.amount_invoiced) || 0) / 100;
+//   const estimatedTotal = Number(all_item_total?.total?.estimated_total) || 0;
+//   const originalContractAmount =
+//     (Number(billing_vs_actual?.original_contract_amount) || 0) / 100;
+
+//   const options: ApexOptions = {
+//     chart: {
+//       id: "chart1",
+//       toolbar: {
+//         show: false,
+//       },
+//     },
+//     plotOptions: {
+//       bar: {
+//         horizontal: false,
+//         columnWidth: "30%",
+//         dataLabels: {
+//           position: "top",
+//         },
+//       },
+//     },
+//     xaxis: {
+//       categories: ["Committed", "Actual", "Labor", "Invoiced"],
+//     },
+//     yaxis: {
+//       labels: {
+//         formatter: function (val: number) {
+//           return `${val.toFixed(0)}%`;
+//         },
+//       },
+//       min: 0,
+//       max: 1000,
+//     },
+//     dataLabels: {
+//       enabled: false,
+//     },
+//     stroke: {
+//       colors: ["transparent"],
+//       width: 5,
+//     },
+//     tooltip: {
+//       shared: true,
+//       intersect: false,
+//       y: {
+//         formatter: function (val: number) {
+//           return formatCurrency(Number(val));
+//         },
+//       },
+//     },
+//     colors: ["#7989A9", "#F9C75C"],
+//     legend: {
+//       show: false,
+//       position: "top",
+//     },
+//   };
+
+//   const series = [
+//     {
+//       name: "Invoiced to Date",
+//       data: [commitedTotal, actualTotal, laborActualTotal, amountInvoiced],
+//     },
+//     {
+//       name: "Total Project Amount",
+//       data: [
+//         estimatedTotal,
+//         actualTotal,
+//         laborActualTotal,
+//         originalContractAmount,
+//       ],
+//     },
+//   ];
+
+//   return (
+//     <div className="h-full">
+//       <CustomIcon
+//         icon={faSackDollar}
+//         label="Summary Percentages"
+//         bgColor="#FEF6E5"
+//         color="#F8AB07"
+//         className="text-base"
+//       />
+
+//       <Suspense fallback={<div>Loading Chart...</div>}>
+//         <ReactApexChart
+//           type="bar"
+//           height={307}
+//           options={options}
+//           series={series}
+//         />
+//       </Suspense>
+//     </div>
+//   );
+// };
+
+// export default SummaryPercentages;
+
+import React, { Suspense, useEffect, useState } from "react";
 import { ApexOptions } from "apexcharts";
 import CustomIcon from "./CustomIcon";
-import Skeleton from "./Skeletons/skeleton";
+
+const ReactApexChart = require("react-apexcharts").default;
 
 import { faSackDollar } from "@fortawesome/pro-solid-svg-icons";
 
 const SummaryPercentages = ({ data }: any) => {
-  const billing_vs_actual = data?.billing_vs_actual;
-  const all_item_total = data?.all_item_total;
+  // const [ReactApexChart, setReactApexChart] = useState<any>();
 
-  const formatCurrency = (value: number) => {
+  // useEffect(() => {
+  //   import("react-apexcharts").then((d) => setReactApexChart(() => d.default));
+  // }, []);
+
+  const billing_vs_actual = data?.billing_vs_actual || {};
+  const all_item_total = data?.all_item_total || {};
+
+  // Function to format currency
+  const formatCurrency = (value: any) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
@@ -18,21 +148,15 @@ const SummaryPercentages = ({ data }: any) => {
     }).format(value);
   };
 
-  const calculatePercentage = (value: number, total: number) => {
-    if (total === 0) return 0;
-    return (value / total) * 100;
-  };
-
-  // console.log("qwqwqwqw", data);
-  const [ReactApexChart, setReactApexChart] = useState<any>();
-
-  // FOR REMIX
-  useEffect(() => {
-    import("react-apexcharts").then((d) => setReactApexChart(() => d.default));
-  }, []);
-
-  // HTML
-  // const ReactApexChart = require("react-apexcharts").default;
+  // Sanitize and validate data before using in chart
+  const commitedTotal = Number(all_item_total?.total?.commited_total) || 0;
+  const actualTotal = Number(all_item_total?.total?.actual_total) || 0;
+  const laborActualTotal = Number(all_item_total?.labor?.actual_total) || 0;
+  const amountInvoiced =
+    (Number(billing_vs_actual?.amount_invoiced) || 0) / 100;
+  const estimatedTotal = Number(all_item_total?.total?.estimated_total) || 0;
+  const originalContractAmount =
+    (Number(billing_vs_actual?.original_contract_amount) || 0) / 100;
 
   const options: ApexOptions = {
     chart: {
@@ -46,7 +170,7 @@ const SummaryPercentages = ({ data }: any) => {
         horizontal: false,
         columnWidth: "30%",
         dataLabels: {
-          // position: "top", // Show data labels at the top of the bars
+          position: "top",
         },
       },
     },
@@ -72,7 +196,9 @@ const SummaryPercentages = ({ data }: any) => {
       min: 0,
       max: 1000,
     },
-
+    dataLabels: {
+      enabled: false,
+    },
     stroke: {
       colors: ["transparent"],
       width: 5,
@@ -81,22 +207,8 @@ const SummaryPercentages = ({ data }: any) => {
       shared: true,
       intersect: false,
       y: {
-        formatter: function (val: number, { seriesIndex, dataPointIndex, w }) {
-          const actualVal =
-            seriesIndex === 0
-              ? [
-                  all_item_total?.total?.commited_total,
-                  all_item_total?.total?.actual_total,
-                  all_item_total?.labor?.actual_total,
-                  billing_vs_actual?.amount_invoiced / 100,
-                ][dataPointIndex]
-              : [
-                  all_item_total?.unassigned?.estimated_total,
-                  all_item_total?.total?.estimated_total,
-                  all_item_total?.labor?.estimated_total,
-                  billing_vs_actual?.original_contract_amount / 100,
-                ][dataPointIndex];
-          return formatCurrency(actualVal); // Show currency in tooltip
+        formatter: function (val: number) {
+          return formatCurrency(Number(val));
         },
       },
     },
@@ -109,24 +221,24 @@ const SummaryPercentages = ({ data }: any) => {
 
   const series = [
     {
-      name: "Actual Cost",
-      data: [
-        Number(all_item_total?.total?.commited_total),
-        Number(all_item_total?.total?.actual_total),
-        Number(all_item_total?.labor?.actual_total),
-        Number(billing_vs_actual?.amount_invoiced / 100),
-      ],
+      name: "Invoiced to Date",
+      data: [commitedTotal, actualTotal, laborActualTotal, amountInvoiced],
     },
     {
       name: "Total Project Amount",
       data: [
-        Number(all_item_total?.unassigned?.estimated_total),
-        Number(all_item_total?.total?.estimated_total),
-        Number(all_item_total?.labor?.estimated_total),
-        Number(billing_vs_actual?.original_contract_amount / 100),
+        estimatedTotal,
+        actualTotal,
+        laborActualTotal,
+        originalContractAmount,
       ],
     },
   ];
+
+  if (!data) {
+    console.log("<<<<<==== Data not Available ====>>>>>");
+    return <div>Loading Charts</div>;
+  }
 
   return (
     <div className="h-full">
@@ -139,43 +251,19 @@ const SummaryPercentages = ({ data }: any) => {
       />
 
       {!ReactApexChart ? (
-        <div className="mt-5">
-          <ChartSkeleton />
-        </div>
+        <>Loading...</>
       ) : (
-        <ReactApexChart
-          type="bar"
-          height={307}
-          responsive
-          options={options}
-          series={series}
-        />
+        <Suspense fallback={<div>Loading Chart...</div>}>
+          <ReactApexChart
+            type="bar"
+            height={307}
+            options={options}
+            series={series}
+          />
+        </Suspense>
       )}
     </div>
   );
 };
 
 export default SummaryPercentages;
-
-const ChartSkeleton = () => {
-  return (
-    <div className="relative h-64 ">
-      {/* Y-axis labels */}
-      <div className="absolute left-0 top-0 bottom-0 flex flex-col justify-between py-2">
-        {[...Array(6)].map((_, index) => (
-          <Skeleton key={index} className="w-10 h-2" />
-        ))}
-      </div>
-
-      {/* Chart bars */}
-      <div className="absolute left-14  right-0 top-0 bottom-8 flex justify-between items-end">
-        {[10, 16, 60, 20, 40].map((height, index) => (
-          <div key={index} className="flex flex-col items-center">
-            <Skeleton className={`w-12 mb-1 h-${height}`} />
-            <Skeleton className="w-16 h-2" />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};

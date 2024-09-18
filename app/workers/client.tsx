@@ -1,17 +1,35 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
-
+import { hydrateRoot } from "react-dom/client";
 import Index from "../routes/_index";
 
-const mountComponent = (
-  Component: React.ComponentType,
-  containerId: string
-) => {
+function hydrateComponent(
+  Component: React.ComponentType<any>,
+  containerId: string,
+  projectId: string,
+  userId: string,
+  compId: string
+) {
   const container = document.getElementById(containerId);
   if (container) {
-    const root = createRoot(container);
-    root.render(<Component />);
-  }
-};
+    const root = hydrateRoot(
+      container,
+      <Component projectId={projectId} userId={userId} compId={compId} />
+    );
 
-mountComponent(Index, "root1");
+    (window as any).updateComponent = (
+      newProId: string,
+      newCompId: string,
+      newUserId: string
+    ) => {
+      root.render(
+        <Component projectId={newProId} userId={newUserId} compId={newCompId} />
+      );
+    };
+  }
+}
+
+// Export both the function and the component
+export { hydrateComponent, Index };
+
+// Also export hydrateComponent as default for compatibility
+export default hydrateComponent;

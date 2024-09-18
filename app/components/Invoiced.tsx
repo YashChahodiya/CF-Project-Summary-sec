@@ -10,7 +10,7 @@ import Skeleton from "./Skeletons/skeleton";
 import { useEffect, useState } from "react";
 import { Modal, Button, Typography, Tooltip } from "antd";
 import CustomIcon from "./CustomIcon";
-import { CFModal } from "./antdmodal";
+import { CFModal } from "./Modal";
 import axios from "axios";
 import { faExpand } from "@fortawesome/sharp-regular-svg-icons";
 
@@ -20,7 +20,6 @@ const Invoiced = ({ data, customer_additional_contacts }: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  console.log("invoiced", customer_additional_contacts);
   const {
     amount_invoiced,
     original_contract_amount,
@@ -30,7 +29,7 @@ const Invoiced = ({ data, customer_additional_contacts }: any) => {
   } = data?.billing_vs_actual;
 
   const invoicedPercentage = (
-    (parseFloat(amount_invoiced) / parseFloat(original_contract_amount)) *
+    (parseFloat(amount_invoiced!) / parseFloat(original_contract_amount!)) *
     100
   ).toFixed(0);
   const remainingPercentage = (
@@ -162,55 +161,20 @@ const Invoiced = ({ data, customer_additional_contacts }: any) => {
     "hover:text-[#FB8056] hover:cursor-pointer hover:transition-colors hover:duration-700";
 
   return (
-    <>
-      <div className="flex flex-col gap-3">
-        <div className={mainDivStyle}>
-          <div className="flex justify-start items-center gap-3 w-full">
-            <Tooltip title="Customer Group" placement="top">
-              <div className="bg-[#ffe8d2dd] w-12 h-10 rounded-full flex justify-center items-center text-[#FB8056]">
-                <FontAwesomeIcon icon={faUserGroup} className="text-base" />
-              </div>
-            </Tooltip>
-            <div className=" w-full">
-              Customer
-              <div className="flex justify-between items-center font-semibold">
-                <a
-                  href="https://app-cfdev.contractorforeman.net"
-                  target="_blank"
-                  className={`font-semibold ${CommonTransition}`}
-                >
-                  {data?.customer_name}
-                </a>
-                <span className="text-[#FB8056] flex justify-center items-center space-x-1 font-semibold hover:cursor-pointer ">
-                  <Tooltip title="Contact Details" placement="top">
-                    <span
-                      className={`text-sm hover:bg-[#f3ddd7] p-1 px-2 rounded-sm ${CommonTransition}`}
-                    >
-                      <FontAwesomeIcon
-                        icon={faAddressCard}
-                        onClick={handleModalOpen}
-                        className="text-sm"
-                      />
-                    </span>
-                  </Tooltip>
-                  <Tooltip
-                    title="Open the Contact Details in New Tab"
-                    placement="top"
-                  >
-                    <a
-                      href="https://app-cfdev.contractorforeman.net"
-                      target="_blank"
-                      className="text-sm"
-                    >
-                      <FontAwesomeIcon
-                        icon={faArrowUpRightFromSquare}
-                        className="text-sm text-[#223558]"
-                      />
-                    </a>
-                  </Tooltip>
-                </span>
-              </div>
-            </div>
+    <div className="flex flex-col gap-3">
+      <div className={mainDivStyle}>
+        <div className="flex justify-start items-center gap-3 w-full  ">
+          <div className="bg-[#ffe8d2dd] w-12 h-10 rounded-full flex justify-center items-center text-[#FB8056] ">
+            <FontAwesomeIcon icon={faUserGroup} className="text-base" />
+          </div>
+          <div className=" w-full">
+            Customer
+            <p className="flex justify-between items-center  font-semibold hover:text-[#FB8056] hover:cursor-pointer hover:transition-all hover:duration-700">
+              {data?.customer_name}{" "}
+              <span className="text-[#FB8056] font-semibold">
+                <FontAwesomeIcon icon={faAddressCard} className="text-sm" />
+              </span>
+            </p>
           </div>
         </div>
 
